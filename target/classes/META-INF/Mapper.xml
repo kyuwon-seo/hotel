@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotelSK.dao.Mapper">
+  
+  <insert id="joinUser" parameterType="com.hotelSK.domain.UserVO">
+  	insert into hotel.users (user_id,user_password,user_name,user_email,user_date) values (#{user_id},#{user_password},#{user_name},#{user_email},#{user_date})
+  </insert>
+  
+  <select id="loginUser" parameterType="Map" resultType="com.hotelSK.domain.UserVO">
+  	select * from hotel.users where user_id = #{user_id} and user_password = #{user_password}
+  </select>
+  
+  <select id="roomInfo" parameterType="int" resultType="com.hotelSK.domain.RoomVO">
+  	select * from hotel.room where room_id = #{room_id}
+  </select>
+  
+  <delete id="deleteUser" parameterType="String">
+  	delete from hotel.users where user_id = #{user_id}
+  </delete>
+  
+  <delete id="deleteRoom" parameterType="int">
+  	delete from hotel.room where room_id = #{room_id}
+  </delete>
+  
+  <select id="userList" resultType="com.hotelSK.domain.UserVO">
+  	select * from hotel.users
+  </select>
+  
+  <select id="roomList" resultType="com.hotelSK.domain.RoomVO">
+  	select * from hotel.room
+  </select>
+  
+  <select id="roomList2" parameterType="String" resultType="com.hotelSK.domain.RoomVO">
+  	select * from hotel.room where hotel_name = #{searchKeyword}
+  </select>
+  
+  <insert id="addRoom" parameterType="com.hotelSK.domain.RoomVO">
+  	insert into hotel.room (room_no,room_type,room_bedType,room_size,room_view,room_fare,hotel_name) values
+  	(#{room_no},#{room_type},#{room_bedType},#{room_size},#{room_view},#{room_fare},#{hotel_name})
+  </insert>
+  <update id="roomUpdate" parameterType="com.hotelSK.domain.RoomVO">
+  	update room set room_no=#{room_no},
+  	room_type=#{room_type},
+  	room_bedType=#{room_bedType},
+  	room_size=#{room_size},
+  	room_view=#{room_view},
+  	room_fare=#{room_fare},
+  	hotel_name=#{hotel_name} where room_id = #{room_id}
+  </update>
+  
+  <insert id="makeReservation" parameterType="com.hotelSK.domain.ReservationVO">
+  	insert into hotel.reservation (res_id,user_no,room_id,checkIn,checkOut,personal,room_type,room_fare,hotel_name) values (#{res_id},#{user_no},#{room_id},#{checkIn},#{checkOut},#{personal},#{room_type},#{room_fare},#{hotel_name})
+  
+  </insert>
+  
+  <insert id="reservStatus" parameterType="com.hotelSK.domain.RoomStatusVO">
+  	insert into hotel.roomstatus (room_id,date,roomsts) values (#{room_id},#{date},#{roomsts})
+  </insert>
+  
+  <select id="checkReserv" parameterType="int" resultType="com.hotelSK.domain.ReservationVO">
+  	select * from hotel.reservation where user_no = #{user_no}
+  </select>
+  
+  <select id="roomStatusList" resultType="com.hotelSK.domain.RoomStatusVO">
+  	select * from hotel.roomstatus
+  </select>
+  
+  <select id="reservationList" resultType="com.hotelSK.domain.ReservationVO">
+  	select * from hotel.reservation
+  </select>
+  
+  <update id="checkInReserv" parameterType="int">
+  	update hotel.reservation set checkIn=true where res_id =#{res_id}
+  </update>
+  
+  <update id="roomStatusUpdate" parameterType="int">
+  	update hotel.roomstatus set roomsts = 'empty' where room_id = #{room_id}
+  </update>
+  
+  <select id="getReservation" parameterType="int" resultType="com.hotelSK.domain.ReservationVO">
+  	select * from hotel.reservation where res_id = #{res_id}
+  </select>
+  
+  <update id="checkOutReserv" parameterType="int">
+  	update hotel.reservation set checkOut=true where res_id =#{res_id}
+  </update>
+  <delete id="cancelReserv" parameterType="int">
+  	delete from hotel.reservation where res_id=#{res_id}
+  </delete>
+  <select id="hotelSearch" parameterType="Map" resultType="com.hotelSK.domain.ReservationVO">
+  	select * from hotel.reservation where DATE(checkIn) BETWEEN #{start_date} AND #{end_date}
+  </select>
+  
+  
+  
+</mapper>

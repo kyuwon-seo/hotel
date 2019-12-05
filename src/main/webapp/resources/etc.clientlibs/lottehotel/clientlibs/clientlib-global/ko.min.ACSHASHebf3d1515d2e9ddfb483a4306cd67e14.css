@@ -1,0 +1,292 @@
+@charset "UTF-8";@font-face{font-weight:400;font-family:"Open Sans";src:url(../../../../etc/designs/lottehotel/webfonts/en/OpenSans-Regular.woff2) format("woff2"),url(../../../../etc/designs/lottehotel/webfonts/en/OpenSans-Regular.woff) format("woff")}
+@font-face{font-weight:600;font-family:"Open Sans Bold";src:url(../../../../etc/designs/lottehotel/webfonts/en/OpenSans-Semibold.woff2) format("woff2"),url(../../../../etc/designs/lottehotel/webfonts/en/OpenSans-Semibold.woff) format("woff")}
+@font-face{font-family:Noto-lang-Regular;src:url(../../../../etc/designs/lottehotel/webfonts/ko/notokr-regular.woff2) format("woff2"),url(../../../../etc/designs/lottehotel/webfonts/ko/notokr-regular.woff) format("woff"),url(../../../../etc/designs/lottehotel/webfonts/ko/notokr-regular.ttf) format("truetype")}
+@font-face{font-family:Noto-lang-Bold;src:url(../../../../etc/designs/lottehotel/webfonts/ko/notokr-medium.woff2) format("woff2"),url(../../../../etc/designs/lottehotel/webfonts/ko/notokr-medium.woff) format("woff"),url(../../../../etc/designs/lottehotel/webfonts/ko/notokr-medium.ttf) format("truetype")}
+*{word-break:keep-all;word-wrap:break-word;font-family:"Open Sans",Noto-lang-Regular,NotoKR-Regular,"Malgun Gothic",sans-serif;margin:0;padding:0;-webkit-box-sizing:border-box;box-sizing:border-box;letter-spacing:-1px;-webkit-font-smoothing:antialiased}
+body,button,dd,div,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,html,input,li,ol,p,select,table,td,textarea,th,tr,ul{margin:0;padding:0}
+body{margin:0;padding:0;font-family:"Open Sans",Noto-lang-Regular,NotoKR-Regular,"Malgun Gothic",sans-serif;font-size:14px;line-height:1.2;color:#333;letter-spacing:0;-ms-text-size-adjust:100%;-moz-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:400}
+img{border:0;vertical-align:top}
+hr{display:none}
+dd,dl,dt,li,ol,ul{padding:0;margin:0;list-style:none}
+table,td,th{border-collapse:collapse;border-spacing:0;font-weight:400}
+caption{padding:0}
+blockquote,button,fieldset,iframe{border:0}
+cite,em,u{font-style:normal}
+a{color:#333;text-decoration:none}
+a:focus,a:hover{color:#333;text-decoration:none}
+input{font-family:"Open Sans",Noto-lang-Regular,NotoKR-Regular,"Malgun Gothic",sans-serif}
+label{font-weight:400;margin:0}
+strong{font-weight:400}
+button{background:0;cursor:pointer;vertical-align:middle;font-family:"Open Sans",Noto-lang-Regular,NotoKR-Regular,"Malgun Gothic",sans-serif;font-size:14px;line-height:1.2;color:#333;letter-spacing:0;-webkit-text-size-adjust:none}
+button,input[type=button],input[type=reset],input[type=submit]{cursor:pointer;-webkit-appearance:none}
+article,aside,footer,header,main,nav,section{display:block}
+input[type=date]::-webkit-calendar-picker-indicator,input[type=date]::-webkit-inner-spin-button{display:none}
+::-webkit-input-placeholder{color:#aaa}
+::-moz-placeholder{color:#aaa}
+:-ms-input-placeholder{color:#aaa}
+:-moz-placeholder{color:#aaa}
+::-ms-clear,::-ms-reveal{display:none}
+button,input,select,textarea{border:0;font-size:14px}
+.skip{position:fixed;top:0;left:0;width:100%;z-index:2000}
+.skip a{display:block;width:0;height:0;font-size:0}
+.skip a:active,.skip a:focus,.skip a:hover{-webkit-box-sizing:content-box;box-sizing:content-box;display:block;padding:9px 0;height:16px;width:100%;text-align:center;font-size:18px;color:#fff;background:#341d17}
+.no-js{visibility:hidden}
+html.has-modal{overflow:hidden;position:fixed;top:0;left:0;right:0;bottom:0}
+html.no-handy .o-tel{display:none !important}
+.tol-area{position:fixed;bottom:70px;width:100%;z-index:100;display:none}
+.tol-area>div{position:relative;max-width:1610px;margin:0 auto}
+.tol-area .tol_top{position:absolute;right:15px;display:block;width:50px;height:50px;border-radius:50%;background:#555;text-align:center;font-size:1px;color:transparent;-webkit-box-shadow:3px 3px 10px rgba(0,0,0,.4);box-shadow:3px 3px 10px rgba(0,0,0,.4)}
+.tol-area .tol_top:after,.tol-area .tol_top:before{content:'';display:block;width:3px;height:16px;border-radius:5px;background:#fff;position:absolute;left:0;top:17px}
+.tol-area .tol_top:before{-webkit-transform:rotate(40deg);-ms-transform:rotate(40deg);transform:rotate(40deg);left:19px}
+.tol-area .tol_top:after{-webkit-transform:rotate(-40deg);-ms-transform:rotate(-40deg);transform:rotate(-40deg);left:28px}
+.o-dimed{position:fixed;top:0;left:0;z-index:102;width:100%;height:100%;background-color:rgba(0,0,0,.6);opacity:0;-webkit-transition:opacity 0 ease-out;-o-transition:opacity 0 ease-out;transition:opacity 0 ease-out}
+.o-dimed--transition{-webkit-transition-duration:.2s;-o-transition-duration:.2s;transition-duration:.2s}
+.o-dimed.is-active{opacity:1}
+.c-modal{display:none;overflow:hidden;position:fixed;top:50%;right:auto;left:50%;bottom:auto;z-index:1001;width:82.7%;max-height:70%;background-color:#fff;opacity:0;will-change:transform;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);-webkit-transition:opacity .2s,height .2s;-o-transition:opacity .2s,height .2s;transition:opacity .2s,height .2s}
+.c-modal .iScrollVerticalScrollbar{position:absolute;z-index:9999;width:10px;bottom:5px;top:5px;right:-10px;overflow:hidden}
+.c-modal .iScrollVerticalScrollbar.iScrollBothScrollbars{bottom:18px}
+.c-modal .iScrollVerticalScrollbar .iScrollIndicator{width:100%;background:#666}
+.c-modal .iScrollHorizontalScrollbar{position:absolute;z-index:9999;height:5px;left:5px;right:5px;bottom:-10px;overflow:hidden}
+.c-modal .iScrollHorizontalScrollbar.iScrollBothScrollbars{right:18px}
+.c-modal .iScrollHorizontalScrollbar .iScrollIndicator{height:100%;background:#666}
+.c-modal .iScrollIndicator{position:absolute;background:#e6e6e6}
+.c-modal.is-active{opacity:1}
+.c-modal__wrap{position:relative;height:100%;padding:58px 0 25px}
+.c-modal.has-button .c-modal__wrap{padding-bottom:60px}
+.c-modal__head{overflow:hidden;position:absolute;top:0;left:0;width:100%;height:42px;padding:0 45px;line-height:42px;text-align:center;border-bottom:1px solid #e6e6e6}
+.c-modal__title{font-size:19px;font-family:"Open Sans Bold",Noto-lang-Bold,"Malgun Gothic",sans-serif;line-height:inherit}
+[lang=my] .c-modal__title{line-height:inherit}
+.c-modal__body{position:relative;height:100%;margin:0 15px}
+.c-modal__scroll{overflow:auto;min-height:100%;height:100%;-webkit-overflow-scrolling:touch}
+.c-modal__scroll.has-iscroll{overflow:hidden}
+.c-modal__content{min-height:100%}
+.c-modal__foot{position:absolute;bottom:15px;left:0;width:100%;text-align:center;font-size:0}
+.c-modal__button{font-family:"Open Sans Bold",Noto-lang-Bold,"Malgun Gothic",sans-serif;position:relative;text-align:center;display:inline-block;border:0;border-radius:0;background:0;color:#333;letter-spacing:-1px;vertical-align:top;-webkit-appearance:none;-moz-appearance:none;appearance:none;border-color:#555;background-color:#555;color:#fff;width:105px;height:30px;margin-left:5px;padding:0 10px;font-size:12px;line-height:1.1}
+.c-modal__button span{white-space:nowrap}
+.c-modal__button.is-disabled,.c-modal__button[disabled]{cursor:default}
+.c-modal__button:active,.c-modal__button:focus,.c-modal__button:hover{background-color:#333;color:#fff}
+.c-modal__button.is-disabled,.c-modal__button[disabled]{background-color:#555;color:#fff}
+.c-modal__button.is-disabled:active,.c-modal__button.is-disabled:focus,.c-modal__button.is-disabled:hover,.c-modal__button[disabled]:active,.c-modal__button[disabled]:focus,.c-modal__button[disabled]:hover{background-color:#555}
+.c-modal__button:first-child{margin-left:0}
+.c-modal__button--gray{border-color:#555;background-color:#555;color:#fff}
+.c-modal__button--gray:active,.c-modal__button--gray:focus,.c-modal__button--gray:hover{background-color:#333;color:#fff}
+.c-modal__button--gray.is-disabled,.c-modal__button--gray[disabled]{background-color:#555;color:#fff}
+.c-modal__button--gray.is-disabled:active,.c-modal__button--gray.is-disabled:focus,.c-modal__button--gray.is-disabled:hover,.c-modal__button--gray[disabled]:active,.c-modal__button--gray[disabled]:focus,.c-modal__button--gray[disabled]:hover{background-color:#555}
+.c-modal__button--blue{border-color:#1b65b3;background-color:#1b65b3;color:#fff}
+.c-modal__button--blue:active,.c-modal__button--blue:focus,.c-modal__button--blue:hover{background-color:#103d6b;color:#fff}
+.c-modal__button--blue.is-disabled,.c-modal__button--blue[disabled]{background-color:#1b65b3;color:#fff}
+.c-modal__button--blue.is-disabled:active,.c-modal__button--blue.is-disabled:focus,.c-modal__button--blue.is-disabled:hover,.c-modal__button--blue[disabled]:active,.c-modal__button--blue[disabled]:focus,.c-modal__button--blue[disabled]:hover{background-color:#1b65b3}
+.c-modal__button--gold{border-color:#ad9e87;background-color:#ad9e87;color:#fff}
+.c-modal__button--gold:active,.c-modal__button--gold:focus,.c-modal__button--gold:hover{background-color:#685f51;color:#fff}
+.c-modal__button--gold.is-disabled,.c-modal__button--gold[disabled]{background-color:#ad9e87;color:#fff}
+.c-modal__button--gold.is-disabled:active,.c-modal__button--gold.is-disabled:focus,.c-modal__button--gold.is-disabled:hover,.c-modal__button--gold[disabled]:active,.c-modal__button--gold[disabled]:focus,.c-modal__button--gold[disabled]:hover{background-color:#ad9e87}
+.c-modal__button--white{background-color:#fff;color:#333}
+.c-modal__button--white:active,.c-modal__button--white:focus,.c-modal__button--white:hover{color:#333}
+.c-modal__button--white:active:before,.c-modal__button--white:focus:before,.c-modal__button--white:hover:before{border-color:#666}
+.c-modal__button--white.is-disabled,.c-modal__button--white[disabled]{border-color:#bbb;color:#333}
+.c-modal__button--white.is-disabled:before,.c-modal__button--white[disabled]:before{border-color:#bbb}
+.c-modal__button--white.is-disabled:active,.c-modal__button--white.is-disabled:focus,.c-modal__button--white.is-disabled:hover,.c-modal__button--white[disabled]:active,.c-modal__button--white[disabled]:focus,.c-modal__button--white[disabled]:hover{border-color:#bbb}
+.c-modal__button--white.is-disabled:active:before,.c-modal__button--white.is-disabled:focus:before,.c-modal__button--white.is-disabled:hover:before,.c-modal__button--white[disabled]:active:before,.c-modal__button--white[disabled]:focus:before,.c-modal__button--white[disabled]:hover:before{border-color:#bbb}
+.c-modal__button--white:before{position:absolute;top:0;left:0;right:0;bottom:0;border:1px solid #bbb;content:""}
+.c-modal__close{position:absolute;top:0;right:0;width:42px;height:42px;line-height:1}
+.c-modal__close:after,.c-modal__close:before{display:block;position:absolute;top:50%;left:50%;margin-left:-12px;width:24px;height:1px;background-color:#333;content:""}
+.c-modal__close:before{-webkit-transform:rotate(45deg);-khtml-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}
+.c-modal__close:after{-webkit-transform:rotate(135deg);-khtml-transform:rotate(135deg);-ms-transform:rotate(135deg);transform:rotate(135deg)}
+.c-modal--size2{top:0;left:0;width:100%;height:100%;max-height:none;-webkit-transform:none;-ms-transform:none;transform:none}
+.c-modal--size2 .c-modal__wrap{padding-top:63px}
+.c-modal--size2.has-button .c-modal__wrap{padding-bottom:60px}
+.c-modal--size3{top:0;left:0;-webkit-transform:none;-ms-transform:none;transform:none;width:100%;height:100%;max-height:none}
+.c-modal--size3 .c-modal__wrap{padding-top:63px}
+.c-modal--size3.has-button .c-modal__wrap{padding-bottom:60px}
+.is-app footer,.is-app header,.is-app--android header,.is-app--iso footer,.is-app--iso header{height:0}
+.is-app footer,.is-app--iso footer{display:none}
+.is-app [data-res-type=LH-seoul-LTSE] .reservation-banner,.is-app [data-res-type=global-global-global] .reservation-banner,.reservation-banner{display:none}
+[data-res-type=LH-seoul-LTSE] .reservation-banner,[data-res-type=global-global-global] .reservation-banner{display:block;width:100%;background:#ae9f88}
+[data-res-type=LH-seoul-LTSE] .reservation-banner .reservation-banner__msg,[data-res-type=global-global-global] .reservation-banner .reservation-banner__msg{width:100%;max-width:1440px;margin:0 auto;padding:15px}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a,[data-res-type=LH-seoul-LTSE] .reservation-banner p,[data-res-type=global-global-global] .reservation-banner a,[data-res-type=global-global-global] .reservation-banner p{font-size:12px;color:#fff}
+[data-res-type=LH-seoul-LTSE] .reservation-banner p,[data-res-type=global-global-global] .reservation-banner p{display:inline;font-family:"Open Sans Bold",Noto-lang-Bold,"Malgun Gothic",sans-serif}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a,[data-res-type=global-global-global] .reservation-banner a{display:inline}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a span,[data-res-type=global-global-global] .reservation-banner a span{position:relative;padding-left:5px;padding-right:10px}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a span:after,[data-res-type=LH-seoul-LTSE] .reservation-banner a span:before,[data-res-type=global-global-global] .reservation-banner a span:after,[data-res-type=global-global-global] .reservation-banner a span:before{display:block;position:absolute;top:50%;right:0;width:5px;height:1px;background-color:#fff;content:""}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a span:before,[data-res-type=global-global-global] .reservation-banner a span:before{margin-top:-2px;-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a span:after,[data-res-type=global-global-global] .reservation-banner a span:after{margin-top:1px;-webkit-transform:rotate(135deg);-ms-transform:rotate(135deg);transform:rotate(135deg)}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a span:focus:after,[data-res-type=LH-seoul-LTSE] .reservation-banner a span:focus:before,[data-res-type=LH-seoul-LTSE] .reservation-banner a span:hover:after,[data-res-type=LH-seoul-LTSE] .reservation-banner a span:hover:before,[data-res-type=global-global-global] .reservation-banner a span:focus:after,[data-res-type=global-global-global] .reservation-banner a span:focus:before,[data-res-type=global-global-global] .reservation-banner a span:hover:after,[data-res-type=global-global-global] .reservation-banner a span:hover:before{background-color:#fff}
+.ly-container{overflow:hidden;min-width:320px;padding-top:46px;padding-bottom:100px}
+.no-responsive .ly-container.fixed{padding-top:159px}
+.is-app .ly-container,.is-app--android .ly-container,.is-app--iso .ly-container{padding-top:0 !important}
+.reservation-page .ly-container{padding-top:0 !important}
+.reservation-page .ly-container{padding-bottom:0}
+.search-is-active{font-family:"Open Sans Bold",Noto-lang-Bold,"Malgun Gothic",sans-serif}
+.js-lazy{visibility:hidden}
+.js-lazy--end{visibility:visible}
+.aem-GridColumn.cq-Editable-dom--container,.cq-Editable-dom--container{padding:0}
+.aem-notEditmode .cq-placeholder,.aem-notEditmode .new{display:none}
+.text--dotline{overflow:hidden}
+.li-spacing-bottom li{padding-bottom:10px}
+.li-spacing-bottom li:last-child{padding-bottom:0}
+.ul-gutter--left{padding-left:15px}
+.tbl-style{overflow-x:auto;min-width:320px}
+.tbl-style table{table-layout:fixed;min-width:640px;width:100%;border-top:2px solid #666;text-align:center}
+.tbl-style td,.tbl-style th{border-bottom:1px solid #e6e6e6;padding:13px 15px}
+.tbl-style th{background-color:#f5f5f5;text-align:center;font-family:"Open Sans Bold",Noto-lang-Bold,"Malgun Gothic",sans-serif}
+.tbl-style strong{font-weight:400;font-family:"Open Sans Bold",Noto-lang-Bold,"Malgun Gothic",sans-serif}
+.is-app .is-app--hide,.is-app--android .is-app--hide,.is-app--iso .is-app--hide{display:none}
+.loading-dimmd{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999}
+.loading-dimmd:before{display:block;content:"";position:absolute;top:0;left:0;z-index:1000;width:100%;height:100%;background:#000;opacity:.3}
+.loading-dimmd .loading{display:inline-block;overflow:hidden;position:absolute;top:50%;right:auto;left:50%;bottom:auto;z-index:1001;zoom:1;width:70px;height:70px;margin-top:-35px;margin-left:-35px;background:#b09d84 url(../../../../content/dam/lottehotel/dependency/loading/loading.gif) no-repeat center center;background-size:33px;border-radius:50%;font-size:0;line-height:0;vertical-align:top}
+.print{width:100%;max-width:1025px;margin:0 auto}
+body#is-printReady,html.print-template{height:100%}
+.print main{display:block;max-width:1025px}
+.print__wrapper{vertical-align:middle}
+.print__header{padding:0 40px 15px 40px;margin-bottom:20px;text-align:center;border-bottom:1px solid #e6e6e6}
+.print__cta{text-align:right;padding:0 20px 25px 0}
+.print__button{display:inline-block;height:40px;font-size:16px;padding:0 48px 0 18px;background:#ad9e87 url(../../../../content/dam/lottehotel/dependency/print/icon-print.png) no-repeat 100px 12px;color:#fff}
+.print__button:focus,.print__button:hover{background-color:#685f51;color:#fff}
+.print__title{font-size:22px;font-family:"Open Sans Bold",Noto-lang-Bold,"Malgun Gothic",sans-serif}
+.print__desc{font-size:16px;padding-top:7px}
+.print footer{display:none !important}
+.print__container{max-width:1025px;width:100%;margin:0 auto;font-size:18px}
+.print__container .d000,.print__container .s098,.print__container .s099,.print__container .s100,.print__container .s101,.print__container .s102{display:none !important}
+.is-printReady .slick-track{-webkit-transform:none !important;-ms-transform:none !important;transform:none !important}
+.is-printReady .iScrollLoneScrollbar,.is-printReady .slick-arrow,.is-printReady .slick-dots,.is-printReady .slick-slide{display:none !important}
+.is-printReady .slick-active{display:block !important}
+.js-to-print{display:none;margin:0 auto;max-width:1025px}
+body#is-printReady{overflow-x:hidden}
+body.is-printReady .print__container{max-width:1025px;width:100%;margin:0 auto;font-family:Arial,sans-serif;font-size:14pt}
+body.is-printReady .print__container *{-webkit-transition:none;-o-transition:none;transition:none;-webkit-transform:none;-ms-transform:none;transform:none}
+body.is-printing .print__container,body.is-printing .skip{display:none !important}
+body.is-printing .js-to-print{display:block;opacity:1;position:relative;z-index:8888}
+[lang=my] h1,[lang=my] h2,[lang=my] h3{line-height:1.7}
+.common-spacing-top--xxxl{padding-top:100px}
+.common-spacing-bottom--xxxl{padding-bottom:100px}
+.common-spacing-top--xxl{padding-top:80px}
+.common-spacing-bottom--xxl{padding-bottom:80px}
+.common-spacing-top--xl{padding-top:60px}
+.common-spacing-bottom--xl{padding-bottom:60px}
+.common-spacing-top--l{padding-top:50px}
+.common-spacing-bottom--l{padding-bottom:50px}
+.common-spacing-top--mm{padding-top:40px}
+.common-spacing-bottom--mm{padding-bottom:40px}
+.common-spacing-top--m{padding-top:30px}
+.common-spacing-bottom--m{padding-bottom:30px}
+.common-spacing-top--ss{padding-top:20px}
+.common-spacing-bottom--ss{padding-bottom:20px}
+.common-spacing-top--s{padding-top:10px}
+.common-spacing-bottom--s{padding-bottom:10px}
+.common-text--txxl{font-size:40px;line-height:1.3}
+.common-text--txl{font-size:30px;line-height:1.4}
+.common-text--tl{font-size:30px;line-height:1.4}
+.common-text--tm_1{font-size:26px;line-height:1.5}
+.common-text--tm_2{font-size:18px;line-height:1.7}
+.common-text--ts_1{font-size:14px;line-height:1.7}
+.common-text--ts_2{font-size:14px;line-height:1.7}
+.common-text--bold{font-family:"Open Sans Bold",Noto-lang-Bold,"Malgun Gothic",sans-serif}
+.float--left{float:left}
+.float--right{float:right}
+.float-clear{clear:both}
+.text-align--left{text-align:left}
+.text-align--right{text-align:right}
+.text-align--center{text-align:center}
+.text--point-color--1{color:#998465}
+.screen--out{overflow:hidden;position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;font-size:1px}
+.clearfix:after{clear:both;display:block;content:"";height:0;visibility:hidden}
+.clearfix{display:block;min-height:1px}
+.pos--static{position:static}
+.pos--relative{position:relative}
+.pos--absolute{position:absolute}
+.pos--fixed{position:fixed}
+@media all and (min-width:768px){body{font-size:18px}
+button{font-size:18px}
+button{font-size:18px}
+button,input,select,textarea{font-size:18px}
+html.handy .o-tel{display:none}
+.c-modal .iScrollVerticalScrollbar{right:-24px}
+.c-modal{width:82.5%;max-height:60%}
+.c-modal__wrap{padding:92px 0 50px}
+.c-modal.has-button .c-modal__wrap{padding-bottom:104px}
+.c-modal__head{height:60px;padding:0 60px;line-height:61px}
+.c-modal__title{font-size:22px}
+.c-modal__body{margin:0 30px}
+.c-modal__foot{bottom:30px}
+.c-modal__button{width:160px;height:44px;font-size:18px;margin-left:10px}
+.c-modal__close{width:61px;height:61px}
+.c-modal__close:after,.c-modal__close:before{width:28px;margin-left:-14px}
+.c-modal--size2{top:50%;left:50%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);width:92.4%;height:auto;max-height:80%}
+.c-modal--size2 .c-modal__wrap{padding-top:92px}
+.c-modal--size2.has-button .c-modal__wrap{padding-bottom:104px}
+.c-modal--size2.has-button .c-modal__foot{bottom:30px}
+.c-modal--size3{top:50%;left:50%;width:92.4%;height:auto;max-height:80%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}
+.c-modal--size3 .c-modal__wrap{padding-top:92px}
+.c-modal--size3.has-button .c-modal__wrap{padding-bottom:104px}
+.c-modal--size3.has-button .c-modal__foot{bottom:30px}
+.common-spacing-top--xxxl{padding-top:150px}
+.common-spacing-bottom--xxxl{padding-bottom:150px}
+.common-spacing-top--xxl{padding-top:100px}
+.common-spacing-bottom--xxl{padding-bottom:100px}
+.common-spacing-top--xl{padding-top:80px}
+.common-spacing-bottom--xl{padding-bottom:80px}
+.common-spacing-top--l{padding-top:60px}
+.common-spacing-bottom--l{padding-bottom:60px}
+.common-spacing-top--mm{padding-top:40px}
+.common-spacing-bottom--mm{padding-bottom:40px}
+.common-spacing-top--m{padding-top:30px}
+.common-spacing-bottom--m{padding-bottom:30px}
+.common-spacing-top--ss{padding-top:20px}
+.common-spacing-bottom--ss{padding-bottom:20px}
+.common-spacing-top--s{padding-top:10px}
+.common-spacing-bottom--s{padding-bottom:10px}
+.common-text--txxl{font-size:50px;line-height:1.4}
+.common-text--txl{font-size:40px;line-height:1.3}
+.common-text--tl{font-size:30px;line-height:1.4}
+.common-text--tm_1{font-size:26px;line-height:1.5}
+.common-text--tm_2{font-size:22px;line-height:1.6}
+.common-text--ts_1{font-size:18px;line-height:1.7}
+.common-text--ts_2{font-size:16px;line-height:1.7}
+}
+@media all and (min-width:1025px){.tol-area{bottom:130px}
+.c-modal{width:50%;max-height:60%}
+.c-modal--size2{width:70%;height:auto;max-height:70%}
+.c-modal--size3{width:90%;max-height:80%}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a,[data-res-type=LH-seoul-LTSE] .reservation-banner p,[data-res-type=global-global-global] .reservation-banner a,[data-res-type=global-global-global] .reservation-banner p{font-size:16px}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a span,[data-res-type=global-global-global] .reservation-banner a span{padding-right:13px}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a span:after,[data-res-type=LH-seoul-LTSE] .reservation-banner a span:before,[data-res-type=global-global-global] .reservation-banner a span:after,[data-res-type=global-global-global] .reservation-banner a span:before{width:8px}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a span:before,[data-res-type=global-global-global] .reservation-banner a span:before{margin-top:-2px}
+[data-res-type=LH-seoul-LTSE] .reservation-banner a span:after,[data-res-type=global-global-global] .reservation-banner a span:after{margin-top:3px}
+.ly-container{padding-top:0}
+.ly-container.fixed{padding-top:159px}
+.common-spacing-top--xxxl{padding-top:150px}
+.common-spacing-bottom--xxxl{padding-bottom:150px}
+.common-spacing-top--xxl{padding-top:100px}
+.common-spacing-bottom--xxl{padding-bottom:100px}
+.common-spacing-top--xl{padding-top:80px}
+.common-spacing-bottom--xl{padding-bottom:80px}
+.common-spacing-top--l{padding-top:60px}
+.common-spacing-bottom--l{padding-bottom:60px}
+.common-spacing-top--mm{padding-top:40px}
+.common-spacing-bottom--mm{padding-bottom:40px}
+.common-spacing-top--m{padding-top:30px}
+.common-spacing-bottom--m{padding-bottom:30px}
+.common-spacing-top--ss{padding-top:20px}
+.common-spacing-bottom--ss{padding-bottom:20px}
+.common-spacing-top--s{padding-top:10px}
+.common-spacing-bottom--s{padding-bottom:10px}
+.common-text--txxl{font-size:50px;line-height:1.4}
+.common-text--txl{font-size:40px;line-height:1.3}
+.common-text--tl{font-size:30px;line-height:1.4}
+.common-text--tm_1{font-size:26px;line-height:1.5}
+.common-text--tm_2{font-size:22px;line-height:1.6}
+.common-text--ts_1{font-size:18px;line-height:1.7}
+.common-text--ts_2{font-size:16px;line-height:1.7}
+}
+@media(min-width:1025px){.gutter--web--left{padding-left:15px}
+.gutter--web--right{padding-right:15px}
+}
+@media(max-width:767px){.gutter--mobile--left{padding-left:15px}
+.gutter--mobile--right{padding-right:15px}
+}
+@media(min-width:768px) and (max-width:1024px){.gutter--tablet--left{padding-left:15px}
+.gutter--tablet--right{padding-right:15px}
+}
+@media print{.print__cta,.print__footer,.print__header{display:none}
+}
