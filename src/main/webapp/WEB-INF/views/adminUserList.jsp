@@ -122,30 +122,35 @@ function home(){
 </script>
  --%>
 <br/><br/><br/>
-<table>
+<div class="table-responsive">
+<div class="row">
+  <div class="col-md-2"></div>
+<div class="col-md-8">
+<table class="table table-hover">
 	<tbody>
 	<% List<UserVO> list = (List<UserVO>)request.getSession().getAttribute("userList"); %>
-		<tr>
-			<th>아이디</th>
-			<th>&nbsp;&nbsp;</th>
-			<th>이메일</th>
-			<th>&nbsp;&nbsp;</th>
-			<th>이름</th>
-			<th>&nbsp;&nbsp;</th>
-			<th>생년월일</th>
+		<tr class="info">
+			<th><b>아이디</b></th>
+			<!-- <th>&nbsp;&nbsp;</th> -->
+			<th><b>이메일</b></th>
+			<!-- <th>&nbsp;&nbsp;</th> -->
+			<th><b>이름</b></th>
+			<!-- <th>&nbsp;&nbsp;</th> -->
+			<th><b>생년월일</b></th>
+			<th></th>
 		</tr>
-	
+		
 	<% for(int i=0; i<list.size(); i++ ) {
 		%>
 		<tr>
 			<td><%=list.get(i).getUser_id()%></td>
-			<td><span>&nbsp;&nbsp;</span></td>
+			<!-- <td><span>&nbsp;&nbsp;</span></td> -->
 			<td><%=list.get(i).getUser_email()%></td>
-			<td><span>&nbsp;&nbsp;</span></td>
+			<!-- <td><span>&nbsp;&nbsp;</span></td> -->
 			<td><%=list.get(i).getUser_name()%></td>
-			<td><span>&nbsp;&nbsp;&nbsp;</span></td>
+			<!-- <td><span>&nbsp;&nbsp;&nbsp;</span></td> -->
 			<td><%=list.get(i).getUser_date()%></td>
-			<td><span>&nbsp;&nbsp;&nbsp;</span></td>
+			<!-- <td><span>&nbsp;&nbsp;&nbsp;</span></td> -->
 			<%-- <td>
 			<form action="<%=request.getContextPath()%>/userDelete" method="post">
 				<input type="hidden" value="<%=list.get(i).getUser_id()%>" name="user_id" style="border: solid;border-color: gray;"/>
@@ -172,6 +177,12 @@ function home(){
 	</tbody>
 
 </table>
+
+</div>
+<div class="col-md-2"></div>
+
+</div>
+</div>
 <div>
 <br/><br/><br/><br/><br/><br/>
 </div>

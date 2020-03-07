@@ -8,6 +8,10 @@
   	insert into hotel.users (user_id,user_password,user_name,user_email,user_date) values (#{user_id},#{user_password},#{user_name},#{user_email},#{user_date})
   </insert>
   
+  <select id="getIdCheck" parameterType="String" resultType="int">
+	select count(*) from hotel.users where user_id = #{user_id}  
+  </select>
+  
   <select id="loginUser" parameterType="Map" resultType="com.hotelSK.domain.UserVO">
   	select * from hotel.users where user_id = #{user_id} and user_password = #{user_password}
   </select>
@@ -52,11 +56,14 @@
   
   <insert id="makeReservation" parameterType="com.hotelSK.domain.ReservationVO">
   	insert into hotel.reservation (res_id,user_no,room_id,checkIn,checkOut,personal,room_type,room_fare,hotel_name) values (#{res_id},#{user_no},#{room_id},#{checkIn},#{checkOut},#{personal},#{room_type},#{room_fare},#{hotel_name})
-  
   </insert>
   
   <insert id="reservStatus" parameterType="com.hotelSK.domain.RoomStatusVO">
   	insert into hotel.roomstatus (room_id,date,roomsts) values (#{room_id},#{date},#{roomsts})
+  </insert>
+  
+  <insert id="addComments" parameterType="com.hotelSK.domain.CommentsVO">
+  	insert into hotel.comments (co_txt, user_id, room_id) values (#{co_txt}, #{user_id}, #{room_id})
   </insert>
   
   <select id="checkReserv" parameterType="int" resultType="com.hotelSK.domain.ReservationVO">
@@ -90,9 +97,22 @@
   	delete from hotel.reservation where res_id=#{res_id}
   </delete>
   <select id="hotelSearch" parameterType="Map" resultType="com.hotelSK.domain.ReservationVO">
-  	select * from hotel.reservation where DATE(checkIn) BETWEEN #{start_date} AND #{end_date}
+  	select * from hotel.reservation where (#{start_date} BETWEEN checkIn AND checkOut) 
+  	OR (#{end_date} BETWEEN checkIn AND checkOut) 
+  </select>
+  <select id="hotelReSearch" parameterType="com.hotelSK.domain.ReservationVO" resultType="int">
+  	select count(*) from hotel.reservation where room_id=#{room_id} AND ((#{checkIn} BETWEEN checkIn AND checkOut) 
+  	OR (#{checkOut} BETWEEN checkIn AND checkOut)) 
   </select>
   
+  <select id="commentList" parameterType="int" resultType="com.hotelSK.domain.CommentsVO">
+  	select * from comments where room_id=#{room_id} order by co_no desc limit #{page}, 5;
+  </select>
+  
+  <!-- <select id="hotelSearch" parameterType="Map" resultType="com.hotelSK.domain.ReservationVO">
+  	select * from hotel.reservation where DATE(checkIn) BETWEEN #{start_date} AND #{end_date}
+  </select> -->
+  <!-- reservation의 체크인과 체크아웃 사이에 strat가 있니? end가 있니? 둘다 없으면 예약 가능! -->
   
   
 </mapper>

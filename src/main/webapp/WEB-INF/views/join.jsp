@@ -12,7 +12,11 @@
 <title>글로벌 호텔그룹 SK호텔앤리조트 공식 사이트</title>
 <script>
         window.is_html = false;
-    </script>
+</script>
+<script src="//code.jquery.com/jquery.min.js"></script>
+
+<!-- <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> -->
+
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/etc.clientlibs/lottehotel/clientlibs/clientlib-dependencies.min.ACSHASHd41d8cd98f00b204e9800998ecf8427e.css"
@@ -95,34 +99,82 @@
 					</div>
 				</div>
 			<div>
-				<div id="container" class="ly-container">
+
+			
+			<div id="container" class="ly-container">
 						<div align="center">
 							<form action="<%=request.getContextPath()%>/joinUser" method="post">
-								아이디 :  <input type="text" name="user_id" placeholder="아이디" style="border: solid;border-color: gray;"/>
-								<br/>
-								<br/>
+								아이디 :  <input type="text" id="user_id" name="user_id" placeholder="아이디" style="border: solid;border-color: gray;"/>
+								<br/><div class="check_font" id="id_check"></div><br/>
 								
-								비밀번호 :  <input type="password" name="user_pw"  placeholder="비밀번호" style="border: solid;border-color: gray;"/>
-								<br/>
-								<br/>
+								비밀번호 :  <input type="password" id="user_pw" name="user_pw"  placeholder="비밀번호" style="border: solid;border-color: gray;"/>
+								<br/><br/>
+								
+								비밀번호 확인 :  <input type="password" id="user_pw2" name="user_pw2"  placeholder="비밀번호 확인" style="border: solid;border-color: gray;"/>
+								<br/><div class="check_font" id="pw_check"></div><br/>
 								
 								이름 :  <input type="text" name="user_name" placeholder="이름" style="border: solid;border-color: gray;"/>
-								<br/>
-								<br/>
+								<br/><br/>
 								
 								이메일 :  <input type="email" name="user_email" placeholder="이메일" style="border: solid;border-color: gray;"/>
-								<br/>
-								<br/>
+								<br/><br/>
 								
 								생년월일 :  <input type="date" name="user_birth" placeholder="생년월일" style="border: solid;border-color: gray;"/>
-								<br/>
-								<br/>
-								
+								<br/><br/>
 								
 								<input type="submit" value="회원가입"></input><br/>
 							</form>
 						</div>
+<script>			
+	$(function() { //비밀번호 확인
+		$('#user_pw2').blur(function() {
+			if ($('#user_pw').val() != $('#user_pw2').val()) {
+				if ($('#user_pw2').val() != '') {
+					$("#pw_check").text("비밀번호가 일치하지 않습니다.");
+					$("#pw_check").css("color", "red");
+					//$('#pw2').focus();
+				}
+			}else{
+				$("#pw_check").text("");
+			}
+		})
+	});
+</script>
+<script>
+	$("#user_id").blur(
+			function() {
+				var user_id = $('#user_id').val();
+				$.ajax({
+					url : 'idCheck?userId='
+							+ user_id,
+					type : 'get',
+					success : function(data) {
+						console.log("1 = 중복o / 0 = 중복x : " + data);
 
+						if (data == 1) {
+							// 1 : 아이디가 중복되는 문구
+							$("#id_check").text("사용중인 아이디입니다.");
+							$("#id_check").css("color", "red");
+							//$("#reg_submit").attr("disabled", true);
+						} else { // 0 : 중복 x
+							if (user_id == "") {
+								// 0 : 아이디 길이 / 문자열 검사
+								$('#id_check').text('아이디를 입력해주세요');
+								$('#id_check').css('color', 'blue');
+								//$("#reg_submit").attr("disabled", false);
+							} else{
+								$('#id_check').text('사용 가능한 아이디입니다');
+								$('#id_check').css('color', 'red');
+								//$("#reg_submit").attr("disabled", true);
+							}
+						}
+					},
+					error : function() {
+						console.log("실패");
+					}
+				});
+			});
+</script>
 
 				</div>
 			</div>
@@ -211,6 +263,7 @@
 				</div>
 			</footer>
 		</div>
+		
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/etc.clientlibs/lottehotel/clientlibs/clientlib-dependencies.min.ACSHASH29195619a128b2e1241c11dd7742c127.js"></script>
 

@@ -105,7 +105,7 @@
 					<br/>
 				
 				</div>
-						<div align="center">
+						<%-- <div align="center">
 							<form action="<%=request.getContextPath()%>/loginUser" method="post">
 								아이디 :  <input type="text" name="user_id" placeholder="아이디" style="border: solid;border-color: gray;"/>
 								<br/>
@@ -114,16 +114,41 @@
 								비밀번호 :  <input type="password" name="user_password" placeholder="비밀번호" style="border: solid;border-color: gray;"/>
 								<br/>
 								<br/>
-								<input type="submit" value="로그인"></input><br/>
+								<p><input type="submit" class="btn btn-default btn-sm" value="로그인"></input></p><br/>
 							</form>
+						</div> --%>
+		
+					<form class="form-horizontal" action="<%=request.getContextPath()%>/loginUser" method="post">
+					<div class="col-md-offset-4">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">Id :&nbsp;</label>
+							<div class="col-xs-3">
+								<input type="text" name="user_id" class="form-control"
+									placeholder="id">
+							</div>
 						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">Password :&nbsp;</label>
+							<div class="col-xs-3">
+								<input type="password" name="user_password" class="form-control"
+									placeholder="password">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-default btn-sm">로그인</button>
+							</div>
+						</div>
+						</div>
+					</form>
+					
+				
 				<div>
 					<br/>
 					<br/>
 					<br/>
 					<br/>
 				
-				</div>
 				</div>
 			</div>
 			<footer

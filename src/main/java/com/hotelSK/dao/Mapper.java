@@ -3,6 +3,9 @@ package com.hotelSK.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.hotelSK.domain.CommentsVO;
 import com.hotelSK.domain.ReservationVO;
 import com.hotelSK.domain.RoomStatusVO;
 import com.hotelSK.domain.RoomVO;
@@ -24,14 +27,17 @@ public interface Mapper {
 	public void reservStatus(RoomStatusVO roomStatusVO);
 	public List<RoomStatusVO> roomStatusList();
 	public List<ReservationVO> reservationList();
-	public UserVO getIdCheck(String id);
+	public int getIdCheck(String user_id);
+	public UserVO getIdCheckk(String user_id);
 	public void checkInReserv(int res_id);
 	public void checkOutReserv(int res_id);
 	public ReservationVO getReservation(int res_id);
 	public void roomStatusUpdate(int room_id);
 	public void cancelReserv(int res_id);
 	public List<ReservationVO> hotelSearch(Map<String, String> searchMap);
+	public int hotelReSearch(ReservationVO reservationVO);
+	public void addComments(CommentsVO commentsVO);
+	public List<CommentsVO> commentList(@Param("room_id")int room_id, @Param("page")int page);
 
-	
 	
 }

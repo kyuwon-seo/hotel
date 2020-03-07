@@ -263,7 +263,7 @@
 									
 									<td>&nbsp;&nbsp;<%=roomList.get(i).getRoom_fare()%>&nbsp;&nbsp;</td>
 									
-									<td>&nbsp;&nbsp;<a id="reservButton" style="border: solid;" href="<%=request.getContextPath()%>/reservationPage?room_id=<%=roomList.get(i).getRoom_id()%>">선택</a></td>
+									<td>&nbsp;&nbsp;<a id="reservButton" style="border: solid;" href="<%=request.getContextPath()%>/reservationPage?room_id=<%=roomList.get(i).getRoom_id()%>">상세정보</a></td>
 								</tr>
 								<%	
 								}
@@ -304,7 +304,7 @@
 										
 										<td>&nbsp;&nbsp;<%=roomList.get(i).getRoom_fare()%>&nbsp;&nbsp;</td>
 										
-										<td>&nbsp;&nbsp;<a id="reservButton" style="border: solid;" href="<%=request.getContextPath()%>/reservationPage?room_id=<%=roomList.get(i).getRoom_id()%>">선택</a></td>
+										<td>&nbsp;&nbsp;<a id="reservButton" style="border: solid;" href="<%=request.getContextPath()%>/reservationPage?room_id=<%=roomList.get(i).getRoom_id()%>">상세정보</a></td>
 									</tr>
 									<%	
 									}
@@ -344,7 +344,7 @@
 										
 										<td>&nbsp;&nbsp;<%=roomList.get(i).getRoom_fare()%>&nbsp;&nbsp;</td>
 										
-										<td>&nbsp;&nbsp;<a id="reservButton" style="border: solid;" href="<%=request.getContextPath()%>/reservationPage?room_id=<%=roomList.get(i).getRoom_id()%>">선택</a></td>
+										<td>&nbsp;&nbsp;<a id="reservButton" style="border: solid;" href="<%=request.getContextPath()%>/reservationPage?room_id=<%=roomList.get(i).getRoom_id()%>">상세정보</a></td>
 									</tr>
 									<%	
 									}

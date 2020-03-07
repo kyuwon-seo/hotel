@@ -115,64 +115,22 @@
 				<div id="container" class="ly-container">
 					<div align="center">
 
-<%-- <table>
-	<tbody>
-	<% List<RoomStatusVO> list = (List<RoomStatusVO>)request.getSession().getAttribute("roomStatusList"); %>
-		<tr>
-			<th>room_id</th>
-			<th>&nbsp;&nbsp;</th>
-			<th>날짜</th>
-			<th>&nbsp;&nbsp;</th>
-			<th>상태</th>
-		</tr>
-	
-	<% for(int i=0; i<list.size(); i++ ) {
-		%>
-		<tr>
-			<td><%=list.get(i).getRoom_id()%></td>
-			<td><span>&nbsp;&nbsp;</span></td>
-			<td><%=list.get(i).getDate()%></td>
-			<td><span>&nbsp;&nbsp;</span></td>
-			<td><%=list.get(i).getRoomsts()%></td>
-		</tr>	
-	<%	
-	}
-	%>
-	</tbody>
-</table> --%>
-
-
-<table>
-						<thead>
-								<tr>
-									<!-- <th>&nbsp;&nbsp;예약 번호 &nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th>&nbsp;&nbsp;&nbsp;</th> -->
-									
-									<th>&nbsp;&nbsp;회원 &nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-									
-									<th>&nbsp;&nbsp;호텔 지점 &nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th>&nbsp;&nbsp;&nbsp;</th>
-									
-									<th>방 타입 &nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-									
-									<th>&nbsp;&nbsp;체크인 &nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-
-									<th>&nbsp;&nbsp;체크아웃&nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<!-- <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> -->
-									
-									<th>요금 &nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-																		
+<div class="table-responsive">
+<div class="row">
+  <div class="col-md-1"></div>
+<div class="col-md-10">
+<table class="table table-hover">
+						<tbody>
+								<tr class="info">
+									<th>회원</th>
+									<th>호텔 지점</th>
+									<th>방 타입</th>
+									<th>체크인</th>
+									<th>체크아웃</th>
+									<th>요금</th>
+									<th></th>																		
 								</tr>
-							</thead>
 						
-						
-						
-							<tbody>
 							
 							<% List<ReservationVO> reservationList = (List<ReservationVO>)request.getSession().getAttribute("reservationVO");%>
 							<% List<UserVO> userList = (List<UserVO>)request.getSession().getAttribute("userList");%>
@@ -187,17 +145,17 @@
 								%>
 									<td><span><%=userList.get(j).getUser_name() %></span></td>
 								<%} } %>
-									<td><span>&nbsp;&nbsp;</span></td>
+									<!-- <td><span>&nbsp;&nbsp;</span></td> -->
 									<td><span><%=reservationList.get(i).getHotel_name()%></span></td>
-									<td><span>&nbsp;&nbsp;</span></td>
+									<!-- <td><span>&nbsp;&nbsp;</span></td> -->
 									<td><span><%=reservationList.get(i).getRoom_type()%></span></td>
-									<td><span>&nbsp;&nbsp;</span></td>
+									<!-- <td><span>&nbsp;&nbsp;</span></td> -->
 									<td><span><%=reservationList.get(i).getCheckIn()%></span></td>
-									<td><span>&nbsp;&nbsp;</span></td>
+									<!-- <td><span>&nbsp;&nbsp;</span></td> -->
 									<td><span><%=reservationList.get(i).getCheckOut()%></span></td>
-									<td><span>&nbsp;&nbsp;</span></td>
+									<!-- <td><span>&nbsp;&nbsp;</span></td> -->
 									<td><span><%=reservationList.get(i).getRoom_fare()%></span></td>
-									<td><span>&nbsp;&nbsp;</span></td>
+									<!-- <td><span>&nbsp;&nbsp;</span></td> -->
 									<td><span><a id="reservButton" href="<%=request.getContextPath()%>/adminCancel?res_id=<%=reservationList.get(i).getRes_id()%>">예약 취소</a></span></td>
 								
 								</tr>
@@ -208,6 +166,10 @@
 							
 							</tbody>
 						</table>
+</div>
+<div class="col-md-1"></div>
+</div>
+</div>
 
 <div>
 </br></br>

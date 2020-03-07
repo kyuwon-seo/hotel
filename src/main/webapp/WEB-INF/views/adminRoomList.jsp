@@ -114,47 +114,38 @@ function roomAdd(){
 						</div>
 <div align="center">
 </br></br></br>
-	<table>
+
+<div class="table-responsive">
+<div class="row">
+  <div class="col-md-2"></div>
+<div class="col-md-8">
+<table class="table table-hover">
 	<% request.setCharacterEncoding("utf-8"); %>
 	<% List<RoomVO> list = (List<RoomVO>)request.getSession().getAttribute("roomList"); %>
 	<tbody>
-		<tr>
+		<tr class="info">
 			<th>방 id</th>
-			<th>&nbsp;&nbsp;</th>
 			<th>호텔 지점</th>
-			<th>&nbsp;&nbsp;</th>
 			<th>방 번호</th>
-			<th>&nbsp;&nbsp;</th>
 			<th>방 타입</th>
-			<th>&nbsp;&nbsp;</th>
 			<th>침대 타입</th>
-			<th>&nbsp;&nbsp;</th>
 			<th>방 크기</th>
-			<th>&nbsp;&nbsp;</th>
 			<th>뷰 타입</th>
-			<th>&nbsp;&nbsp;</th>
 			<th>요금</th>
+			<th></th>
 		</tr>
 	
 		<% for(int i=0; i<list.size(); i++ ) {
 			%>
 			<tr>
 				<td><%=list.get(i).getRoom_id()%></td>
-				<td><span>&nbsp;&nbsp;</span></td>
 				<td><%=list.get(i).getHotel_name()%></td>
-				<td><span>&nbsp;&nbsp;</span></td>
 				<td><%=list.get(i).getRoom_no()%></td>
-				<td><span>&nbsp;&nbsp;</span></td>
 				<td><%=list.get(i).getRoom_type()%></td>
-				<td><span>&nbsp;&nbsp;</span></td>
 				<td><%=list.get(i).getRoom_bedType()%></td>
-				<td><span>&nbsp;&nbsp;</span></td>
 				<td><%=list.get(i).getRoom_size()%></td>
-				<td><span>&nbsp;&nbsp;</span></td>
 				<td><%=list.get(i).getRoom_view()%></td>
-				<td><span>&nbsp;&nbsp;</span></td>
 				<td><%=list.get(i).getRoom_fare()%></td>
-				<td><span>&nbsp;&nbsp;</span></td>
 				<td>
 				<span><a id="reservButton" href="<%=request.getContextPath()%>/admin_room_info?room_id=<%=list.get(i).getRoom_id()%>">방 정보 보기</a></span>
 				</td>	
@@ -164,6 +155,10 @@ function roomAdd(){
 		%>
 	</tbody>
 	</table>
+	</div>
+		<div class="col-md-2"></div>
+		</div>
+		</div>
 	
 	<br/>
 	<br/>

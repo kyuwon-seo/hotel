@@ -78,6 +78,7 @@
 					침대 타입 : <input name="room_bedType" placeholder="<%=roomVO.getRoom_bedType()%>" style="border: solid;border-color: gray;"></input>size<br/> <br/>
 					방 크기 : <input name="room_size" placeholder="<%=roomVO.getRoom_size()%>" style="border: solid;border-color: gray;"></input>m2<br/> <br/>
 					요금 : <input name="room_fare" placeholder="<%=roomVO.getRoom_fare()%>" style="border: solid;border-color: gray;"></input>원<br/> <br/>
+					뷰 타입 : <input name="room_view" placeholder="<%=roomVO.getRoom_view()%>" style="border: solid;border-color: gray;"></input><br/> <br/>
 					호텔 지점 : <input name="hotel_name" placeholder="<%=roomVO.getHotel_name()%>" style="border: solid;border-color: gray;"></input><br/> <br/>
 					 <input type="submit" value="정보 수정">
 

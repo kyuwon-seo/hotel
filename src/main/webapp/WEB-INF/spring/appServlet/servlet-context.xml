@@ -24,19 +24,16 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+    <!-- Interceptor 설정 -->
+    <interceptors>
+        <interceptor>
+            <mapping path="/makeReservation"/>
+            <mapping path="addComment"/>
+            
+            <beans:bean class="com.hotelSK.interceptor.authenticationInterceptor"/>
+        </interceptor>
+    </interceptors>
+	
 	<context:component-scan base-package="com.hotelSK.controller" />
-	
-	<!-- websocket handler -->
-	<!-- <beans:bean id="echoHandler" class="com.hotelSK.controller.echoHandler" />
-	
-	<websocket:handlers>
-		<websocket:mapping handler="echoHandler" path="/replyEcho" />
-		<websocket:handshake-interceptors>
-			<beans:bean
-				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
-		</websocket:handshake-interceptors>
-	</websocket:handlers> -->	
-	
-	
-	
+		
 </beans:beans>

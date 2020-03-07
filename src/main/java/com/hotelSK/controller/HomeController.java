@@ -1,5 +1,7 @@
 package com.hotelSK.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,9 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,6 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotelSK.command.AdminRoomDeleteCommand;
@@ -28,12 +34,15 @@ import com.hotelSK.command.AdminRoomUpdateCommand;
 import com.hotelSK.command.AdminUserDeleteCommand;
 import com.hotelSK.command.JoinCommand;
 import com.hotelSK.command.LoginCommand;
+import com.hotelSK.command.MakeReservationCommand;
 import com.hotelSK.command.RoomAddCommand;
 import com.hotelSK.command.RoomListCommand;
 import com.hotelSK.command.UserDeleteCommand;
 import com.hotelSK.command.UserInfoCommand;
 import com.hotelSK.command.UserListCommand;
 import com.hotelSK.dao.Mapper;
+import com.hotelSK.domain.CommentVO;
+import com.hotelSK.domain.CommentsVO;
 import com.hotelSK.domain.ReservationVO;
 import com.hotelSK.domain.RoomStatusVO;
 import com.hotelSK.domain.RoomVO;
@@ -71,6 +80,52 @@ public class HomeController {
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		return "logout";
+	}
+	
+	@RequestMapping(value="idCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public int idCheck(@RequestParam("userId") String user_id) {
+		System.out.println("idCheck 시작");
+		return mapper.getIdCheck(user_id);
+	}
+	
+	@RequestMapping(value="addComment", method=RequestMethod.GET)
+	@ResponseBody
+	public int addComment(HttpServletRequest request, 
+			@RequestParam(value="room_id") int room_id, @RequestParam(value="co_txt") String co_txt) {
+		System.out.println("start comment insert co_txt is "+co_txt);
+		//u_no, r_id, c_txt
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO)session.getAttribute("user");
+		CommentsVO commentsVO = new CommentsVO();
+		commentsVO.setRoom_id(room_id);
+		commentsVO.setCo_txt(co_txt);
+		commentsVO.setUser_id(userVO.getUser_id());
+		
+		if(commentsVO.getCo_txt().equals("")) {
+			return 0;
+		}
+		mapper.addComments(commentsVO);
+		
+		return 1;
+	}
+	// 전달할떈 rEsponsbody  받을때는 인자앞에 rEquestbody 넣자.
+	@RequestMapping(value="commentList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<CommentsVO> commentList(@RequestBody HashMap<String, Object> map) {
+		System.out.println("commentLIST" + map);
+
+		//String p = (String)map.get("page");
+		String r = (String)map.get("room_id");
+		//int page = Integer.parseInt(p);
+		int page = (Integer)map.get("page");
+		int room_id = Integer.parseInt(r);
+		page -= 1;
+		if(page > 0) page *= 5;
+		
+		List<CommentsVO> commentsList = mapper.commentList(room_id, page);
+		
+		return commentsList;
 	}
 	
 	@RequestMapping(value="checkIn")
@@ -167,7 +222,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/loginUser", method=RequestMethod.POST)
-	public String loginUser(HttpServletRequest request) {
+	public String loginUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		LoginCommand loginCommand = new LoginCommand();
 		Map<String,Object> map = loginCommand.command(request, mapper);
 		
@@ -176,7 +231,11 @@ public class HomeController {
 		UserVO userVO = (UserVO)map.get("user");
 		if(userVO == null) {
 			System.out.println("fail");
-			return "login";
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('로그인 정보를 확인해주세요.'); location.href='login';</script>"); 
+			out.flush();
+			//return "login";
 		}
 		if(userVO != null) {
 			HttpSession session = request.getSession();
@@ -296,12 +355,21 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/makeReservation")
-	public String makeReservation(HttpServletRequest request) {
-		if(request.getSession().getAttribute("user")==null) {
-			
+	public String makeReservation(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		/*if(request.getSession().getAttribute("user")==null) {  //인터셉터 처리헀음
 			return "login";
-		}
+		}*/
 		
+		MakeReservationCommand makeReservationCommand = new MakeReservationCommand();
+		Map<String, Object> map = makeReservationCommand.command(request, mapper);
+		String page = (String)map.get("page");
+		if(page.equals("home")) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('이미 예약된 객실입니다.'); location.href='home';</script>"); 
+			out.flush();
+		}
+		/*
 		int room_id = Integer.parseInt(request.getParameter("room_id"));
 		String room_type = (String)(request.getParameter("room_type"));
 		String room_fare = (String)(request.getParameter("room_fare"));
@@ -326,12 +394,13 @@ public class HomeController {
 		
 		Date d = new Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
 		roomStatusVO.setDate(d.toString());
 		
 		mapper.makeReservation(reservationVO);
-		mapper.reservStatus(roomStatusVO);
+		mapper.reservStatus(roomStatusVO);*/
 		
-		return "redirect:userInfo";
+		return page;
 	}
 	
 	
@@ -344,7 +413,6 @@ public class HomeController {
 		
 		return "reservationPage";
 	}
-	
 
 	@RequestMapping(value="/userInfo")
 	public String userInfo(HttpServletRequest request) {
@@ -372,7 +440,9 @@ public class HomeController {
 		return "roomList";
 	}
 	
-	@RequestMapping(value="/keyboard", method=RequestMethod.GET)
+	
+	//챗봇 만들어보자 ~!
+	/*@RequestMapping(value="/keyboard", method=RequestMethod.GET)
 	public String keyboard() {
 		
 		System.out.println("/keyboard");
@@ -433,7 +503,7 @@ public class HomeController {
 		jobjRes.put("keyboard", jobjBtn);
 		
 		return jobjRes.toJSONString();
-	}
+	}*/
 	
 	
 	

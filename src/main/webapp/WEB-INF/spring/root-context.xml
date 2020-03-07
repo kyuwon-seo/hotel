@@ -3,17 +3,20 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 		<!-- <property name="url" value="jdbc:mysql://localhost:3306/hotel?serverTimeZone=UTC"/> -->
+		<property name="url" value="jdbc:mysql://localhost:3306/hotel?allowMultiQueries=true"/>
 		<!-- <property name="url" value="jdbc:mysql://18.216.244.70:3306/hotel?serverTimeZone=UTC"/> -->
-		<property name="url" value="jdbc:mysql://18.216.244.70:3306/hotel?allowMultiQueries=true"/>
+		<!-- <property name="url" value="jdbc:mysql://18.216.244.70:3306/hotel?allowMultiQueries=true"/> -->
 		<property name="username" value="root"/>
 		<property name="password" value="1111"/>
 	</bean>
@@ -27,6 +30,12 @@
 		<property name="mapperInterface" value="com.hotelSK.dao.Mapper"/>
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>	
 	</bean>
+	
+	<!-- Transaction 설정 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 	
 	<mybatis-spring:scan base-package="com.hotelSK.dao"/>
 </beans>

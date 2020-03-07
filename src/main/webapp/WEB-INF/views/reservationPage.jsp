@@ -1,4 +1,6 @@
 <%@page import="com.hotelSK.domain.RoomVO"%>
+<%@page import="com.hotelSK.domain.UserVO" %>
+<%@page import="com.hotelSK.domain.CommentsVO"%>
 <%@page import="java.util.List"%>
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -88,6 +90,7 @@
 								</a>
 							</span>
 						</div>
+						<% int commentPage = 1; %>
 						<div>
 								<% if(request.getSession().getAttribute("user")==null) {
 									%>
@@ -164,6 +167,13 @@
 			<div class="d113-wrap" data-js="modal-login-group">
         <div class="d113-hotel">
         <% RoomVO roomVO = (RoomVO)request.getSession().getAttribute("roomVO"); %>
+        <% 
+        	UserVO userVO = (UserVO)request.getSession().getAttribute("user");
+        	if(userVO == null){
+        		userVO = new UserVO();
+        		userVO.setUser_id(" ");
+        	}
+        %>
 		<%
         String start_date = (String)request.getSession().getAttribute("start_date");
 		String end_date = (String)request.getSession().getAttribute("end_date");
@@ -302,7 +312,43 @@
 							
 							</tbody>
 						</table>
-						
+						</br></br>
+						<div class="container">
+						<hr class="my-2">
+					
+							<form class="form-horizontal" id="commentForm" name="commentForm" method="post">
+							<div class="col-xs-10 col-md-offset-1">
+								<div class="form-group" align="left">
+									<label for="exampleInputName2">Comments :)</label>
+								</div>
+								<div class="form-group">
+									<textarea class="form-control" rows="3" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
+								</div>
+								
+								<div class="form-group" align="right">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button type="button" id="add_co" name="add_co" class="btn btn-success btn-sm">등록</button>
+									</div>
+								</div>
+								
+								<div class="form-group" align="left">
+									<table class="table" id="co_list">
+										<!-- 스크립트로 댓글내용 채울 거임 -->
+									</table>
+								</div>
+								
+								<div class="form-group" align="center">
+								<nav>
+								  <ul class="pagination" id="page_list">
+								  
+								  </ul>
+								  <input type='hidden' id='startPage' name='startPage' value=1></input>
+								  <input type='hidden' id='endPage' name='endPage' value=5></input>
+								</nav>
+								</div>
+								</div>
+							</form>
+						</div>
 						
 				</div>
 				</div>
@@ -388,6 +434,141 @@
 				</div>
 			</footer>
 		</div>
+	<!-- 댓글 작성 insert -->
+	<script>
+	
+			function pagenation(data) { //보여질 페이지 번호->data =클릭페이지
+				
+				var sPage = $('#startPage').val();
+				sPage *= 1; //숫자로 변경
+				var ePage = $('#endPage').val();
+				ePage *= 1;
+				console.log("data is "+data+" s : "+sPage+ " e : "+ePage);
+				
+				if(data == -1){
+					if(sPage > 5){
+						sPage -= 5;
+						var cPage = sPage;  //클릭페이지
+					}else{
+						sPage = 1;
+						var cPage = sPage;
+					}
+				}else if(data == -2){
+					if(ePage > 4){
+						sPage += 5;
+						var cPage = sPage;  //클릭페이지
+					}
+				}else{
+					var cPage = data;  //클릭페이지
+				}
+				console.log("after is "+data+" s : "+sPage+ " e : "+ePage);
+				//var cPage = data;  //클릭페이지
+				getCommentList(cPage);
+				
+				var html="";
+				html += "<li><a href='javascript:void(0);' onclick='pagenation(-1)' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>"			
+				for(i=0; i<5; i++){ //번호나열
+					p = sPage + i;  // ex)1,2,..5
+					if(p == cPage){// 클릭페이지,보여질페이지 활성화 
+						html += "<li class='active'> <a href='javascript:void(0);' onclick='pagenation("+p+")'>"+p+"<span class='sr-only'>(current)</span></a></li>"						
+					}else{
+						html += "<li><a href='javascript:void(0);' onclick='pagenation("+p+")'>"+p+"</a></li>"						
+					}
+				}//for
+				html += "<li> <a href='javascript:void(0);' onclick='pagenation(-2)' aria-label='Next'> <span aria-hidden='true'>&raquo;</span> </a> </li>"
+
+				$('#startPage').val(sPage);
+				$("#page_list").html(html);
+			}//func
+
+		$("#add_co").click(function() {
+			var co_txt = $('#comment').val();
+			var room_id = '<%=roomVO.getRoom_id()%>';
+			var allData = {
+				"co_txt" : co_txt,
+				"room_id" : room_id
+			};
+
+			$.ajax({
+				type : 'GET',
+				url : 'addComment',
+				dataType : 'json',
+				data : allData,
+				success : function(data) {
+					if (data == 1) { //1은 성공
+						$("#comment").val("");
+						getCommentList(1);
+					}
+				},
+				error : function(request, status, error) {
+					console.log("댓글 insert fail");
+					alert('로그인 후 이용해주세요');
+				    location.href = 'login';
+				}
+			});
+		})
+
+		/* 초기 페이지 로딩시 댓글 불러오기 */
+		window.onload = function() {
+			console.log("초기 함수 시작");
+			//getCommentList(1);
+			pagenation(1);
+		};
+
+		/* 댓글 불러오기 */
+		function getCommentList(data) {
+
+			var room_id = '<%=roomVO.getRoom_id()%>';
+			 var page = data;
+			 page *= 1;
+			 var clickPage = '<%=commentPage%>';
+			 var obj = {"page": page, "room_id": room_id};
+			 
+			 $.ajax({
+		        type:'POST',
+		        url : 'commentList',
+		        data: JSON.stringify(obj),
+		        contentType: "application/json",
+		        success: function(data){
+
+		        	console.log(data);
+		        	var html="";
+		        	var own_id = '<%=userVO.getUser_id()%>';
+		        	
+		        	if(data.length > 0){
+		                for(i=0; i<data.length; i++){
+				        	html += "<tr>";
+							html += "<td>";
+							html += "<h5>"+data[i].user_id+"</br><small>"+data[i].co_txt+"</small></h5>";
+							html += "</td>";
+							html += "<td align='right'>";
+							if( data[i].user_id == own_id ){
+								html += "<button>삭제</button>";
+							}
+							html += "</td>";
+							html += "</tr>";
+			                }
+			        	}else {
+			                html += "<tr>";
+							html += "<td>";
+							html += "<h5><string>등록된 댓글이 없습니다.</strong></h5>";
+							html += "</td>";
+							html += "</tr>";
+			            }
+		                
+					$("#co_list").html(html);
+					
+	            },
+	        
+		        error:function(request,status,error){
+		            
+		       }
+			})
+	    }
+	
+		</script>
+
+
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/etc.clientlibs/lottehotel/clientlibs/clientlib-dependencies.min.ACSHASH29195619a128b2e1241c11dd7742c127.js"></script>
 

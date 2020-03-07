@@ -23,6 +23,7 @@ public class AdminRoomUpdateCommand implements Command{
 		String room_bedType = request.getParameter("room_bedType");
 		String room_size = request.getParameter("room_size");
 		String room_fare = request.getParameter("room_fare");
+		String room_view = request.getParameter("room_view");
 		String hotel_name = request.getParameter("hotel_name");
 		
 		
@@ -41,6 +42,9 @@ public class AdminRoomUpdateCommand implements Command{
 		if (room_fare.length() == 0) {
 			room_fare = sessionRoom.getRoom_fare()+"";
 		}
+		if (room_view.length() == 0) {
+			room_view = sessionRoom.getRoom_view()+"";
+		}
 		if (hotel_name.length() == 0) {
 			hotel_name = sessionRoom.getHotel_name()+"";
 		}
@@ -51,6 +55,7 @@ public class AdminRoomUpdateCommand implements Command{
 		roomVO.setRoom_bedType(room_bedType);
 		roomVO.setRoom_size(Integer.parseInt(room_size));
 		roomVO.setRoom_fare(Integer.parseInt(room_fare));
+		roomVO.setRoom_view(room_view);
 		roomVO.setHotel_name(hotel_name);
 		
 		mapper.roomUpdate(roomVO);
