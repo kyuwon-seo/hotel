@@ -9,13 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotelSK.dao.Mapper;
+import com.hotelSK.domain.NotUserVO;
 import com.hotelSK.domain.ReservationVO;
 import com.hotelSK.domain.RoomStatusVO;
+import com.hotelSK.domain.RoomVO;
 import com.hotelSK.domain.UserVO;
 
-@Transactional
+@Transactional("transactionManager")
 public class MakeReservationCommand implements Command{
 
 	@Override
@@ -51,7 +55,7 @@ public class MakeReservationCommand implements Command{
 		
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		if (mapper.hotelReSearch(reservationVO) == 0) { // 해당 날짜에 예약된 방이 0이면
+		if ( (mapper.hotelReSearch(reservationVO)==0) && (mapper.hotelReSearch2(reservationVO)==0) ) { // 해당 날짜에 예약된 방이 0이면
 			mapper.makeReservation(reservationVO);
 			mapper.reservStatus(roomStatusVO);
 			map.put("page", "redirect:userInfo");
@@ -60,5 +64,50 @@ public class MakeReservationCommand implements Command{
 		}
 		
 		return map;
+	}
+	
+	public int make(HttpServletRequest request, Mapper mapper, 
+			int room_id, String checkIn, String checkOut, String nuser_name, String nuser_phone) {
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO)session.getAttribute("user");
+		if(userVO==null) {
+			System.out.println("세션정보 x 로그인필요");
+			
+			return 0;
+		}
+		
+		//비회원 예약 정보
+		ReservationVO reservationVO = new ReservationVO();
+		RoomVO roomVO = mapper.roomInfo(room_id);
+	
+		reservationVO.setRoom_type(roomVO.getRoom_type());
+		reservationVO.setRoom_fare( Integer.toString(roomVO.getRoom_fare()) );
+		reservationVO.setHotel_name(roomVO.getHotel_name());
+		reservationVO.setUser_no(userVO.getUser_no());
+		reservationVO.setRoom_id(room_id);
+		reservationVO.setCheckIn(checkIn); // 입력 받는 날짜로 변경
+		reservationVO.setCheckOut(checkOut);
+		reservationVO.setPersonal("none");
+		
+		int cnt = mapper.hotelReSearch(reservationVO);
+		int cnt2 = mapper.hotelReSearch2(reservationVO);
+		if( cnt!=0 || cnt2!=0 ) { //예약 불가능하면
+			return 0;
+		}
+		
+		mapper.makeReservation(reservationVO);
+		
+		//비회원 정보
+		NotUserVO notUserVO = new NotUserVO();
+		int r_id = mapper.notUserNo(reservationVO);
+		
+		notUserVO.setRes_id(r_id);
+		notUserVO.setNuser_name(nuser_name);
+		notUserVO.setNuser_phone(nuser_phone);
+		
+		mapper.makeNotUser(notUserVO);
+
+		return 1;
 	}
 }

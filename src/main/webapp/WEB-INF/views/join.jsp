@@ -10,6 +10,15 @@
 <!-- SEO :: start ::  -->
 
 <title>글로벌 호텔그룹 SK호텔앤리조트 공식 사이트</title>
+
+<style>
+table {
+	border-spacing: 10px;
+	border-collapse: separate;
+}
+
+</style>
+
 <script>
         window.is_html = false;
 </script>
@@ -43,7 +52,7 @@
 
 <body>
 		<div>
-				<div>
+				<!-- <div> -->
 					<div>
 						<div class="s098__top">
 							<span class="s098__logo"> 
@@ -97,32 +106,95 @@
 								 %>
 						</div>
 					</div>
-				</div>
-			<div>
-
+				<!-- </div> -->
+				
+			<!-- <div> -->
 			
 			<div id="container" class="ly-container">
 						<div align="center">
-							<form action="<%=request.getContextPath()%>/joinUser" method="post">
-								아이디 :  <input type="text" id="user_id" name="user_id" placeholder="아이디" style="border: solid;border-color: gray;"/>
-								<br/><div class="check_font" id="id_check"></div><br/>
-								
-								비밀번호 :  <input type="password" id="user_pw" name="user_pw"  placeholder="비밀번호" style="border: solid;border-color: gray;"/>
-								<br/><br/>
-								
-								비밀번호 확인 :  <input type="password" id="user_pw2" name="user_pw2"  placeholder="비밀번호 확인" style="border: solid;border-color: gray;"/>
-								<br/><div class="check_font" id="pw_check"></div><br/>
-								
-								이름 :  <input type="text" name="user_name" placeholder="이름" style="border: solid;border-color: gray;"/>
-								<br/><br/>
-								
-								이메일 :  <input type="email" name="user_email" placeholder="이메일" style="border: solid;border-color: gray;"/>
-								<br/><br/>
-								
-								생년월일 :  <input type="date" name="user_birth" placeholder="생년월일" style="border: solid;border-color: gray;"/>
-								<br/><br/>
-								
-								<input type="submit" value="회원가입"></input><br/>
+						
+							<form action="<%=request.getContextPath()%>/joinUser" method="post">	
+							<table>
+							<tr>
+								<td>
+									아이디 
+								</td>
+								<td>
+									<input type="text" id="user_id" name="user_id" style="border: solid;border-color: gray;"/>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<!-- <br/> --><div class="check_font" id="id_check"></div><br/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									비밀번호 
+								</td>  
+								<td>
+									<input type="password" id="user_pw" name="user_pw" style="border: solid;border-color: gray;"/>
+							</td>
+								<!-- <br/><br/> -->
+							</tr>
+							<tr>
+								<td>
+									비밀번호 확인   
+								</td>
+								<td>
+									<input type="password" id="user_pw2" name="user_pw2" style="border: solid;border-color: gray;"/>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<!-- <br/> --><div class="check_font" id="pw_check"></div><br/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									이름 
+								</td>
+								<td>
+									<input type="text" name="user_name" style="border: solid;border-color: gray;"/>
+								</td>
+							</tr>
+							<tr>
+								<!-- <br/><br/> -->
+								<td>
+									이메일 
+								</td>
+								<td>
+									<input type="email" name="user_email" style="border: solid;border-color: gray;"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									전화번호 
+								</td>
+								<td>
+									<input type="text" name="user_phone" style="border: solid;border-color: gray;"/>
+								</td>
+							</tr>
+							<tr>
+								<!-- <br/><br/> -->
+								<td>
+									생년월일 
+								</td>
+								<td>
+									<input type="date" name="user_birth" style="border: solid;border-color: gray;"/>
+								</td>
+							</tr>
+								<!-- <br/><br/> -->
+							<tr>
+								<td></td>
+								<td>
+									<input type="submit" class="btn btn-default btn-sm"
+									value="회원가입"></input><br/>
+								</td>
+							</tr>
+							</table>
 							</form>
 						</div>
 <script>			
@@ -150,7 +222,6 @@
 					type : 'get',
 					success : function(data) {
 						console.log("1 = 중복o / 0 = 중복x : " + data);
-
 						if (data == 1) {
 							// 1 : 아이디가 중복되는 문구
 							$("#id_check").text("사용중인 아이디입니다.");
@@ -177,7 +248,7 @@
 </script>
 
 				</div>
-			</div>
+			<!-- </div> -->
 			<footer
 				class="is-app--hide aem-GridColumn aem-GridColumn--default--12">
 		
@@ -271,5 +342,5 @@
 		src="${pageContext.request.contextPath}/resources/etc.clientlibs/lottehotel/clientlibs/clientlib-base.min.ACSHASH05c0b73acf24aa6e3d32172351073812.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/etc.clientlibs/lottehotel/clientlibs/templates/clientlib-basic.min.ACSHASHa36a3f3bae2f6ec9a4180690506659dc.js"></script>
-</body>
+</body>	
 </html>

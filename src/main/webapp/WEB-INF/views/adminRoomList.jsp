@@ -98,14 +98,24 @@ function roomAdd(){
 									<ul class="s098__wrapper--1depth">
 									
 										<li class="item-area">
+											<a href="<%=request.getContextPath()%>/reservationList"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">예약 관리</a>
+										</li>
+										<li class="item-area">
+											<a href="<%=request.getContextPath()%>/userList"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">회원 목록</a>
+										</li>
+										<li class="item-area">
+											<a href="<%=request.getContextPath()%>/roomList"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">객실 목록</a>
+										</li>
+										<li class="item-area">
 											<a href="<%=request.getContextPath()%>/home"
 											class="s098__text--1depth s098__text--arrow" target="_self"
 											data-js="nav__anchor">메인 페이지</a>
-										</li>
-										<li class="item-area">
-											<a href="<%=request.getContextPath()%>/admin"
-											class="s098__text--1depth s098__text--arrow" target="_self"
-											data-js="nav__anchor">관리자 페이지로</a>
 										</li>
 									
 									</ul>
@@ -124,12 +134,12 @@ function roomAdd(){
 	<% List<RoomVO> list = (List<RoomVO>)request.getSession().getAttribute("roomList"); %>
 	<tbody>
 		<tr class="info">
-			<th>방 id</th>
+			<!-- <th>방 id</th> -->
 			<th>호텔 지점</th>
-			<th>방 번호</th>
-			<th>방 타입</th>
+			<th>객실 번호</th>
+			<th>객실 타입</th>
 			<th>침대 타입</th>
-			<th>방 크기</th>
+			<th>크기</th>
 			<th>뷰 타입</th>
 			<th>요금</th>
 			<th></th>
@@ -138,7 +148,7 @@ function roomAdd(){
 		<% for(int i=0; i<list.size(); i++ ) {
 			%>
 			<tr>
-				<td><%=list.get(i).getRoom_id()%></td>
+				<%-- <td><%=list.get(i).getRoom_id()%></td> --%>
 				<td><%=list.get(i).getHotel_name()%></td>
 				<td><%=list.get(i).getRoom_no()%></td>
 				<td><%=list.get(i).getRoom_type()%></td>
@@ -147,7 +157,7 @@ function roomAdd(){
 				<td><%=list.get(i).getRoom_view()%></td>
 				<td><%=list.get(i).getRoom_fare()%></td>
 				<td>
-				<span><a id="reservButton" href="<%=request.getContextPath()%>/admin_room_info?room_id=<%=list.get(i).getRoom_id()%>">방 정보 보기</a></span>
+				<span><a id="reservButton" href="<%=request.getContextPath()%>/admin_room_info?room_id=<%=list.get(i).getRoom_id()%>">객실 정보</a></span>
 				</td>	
 			</tr>	
 		<%	
@@ -161,13 +171,10 @@ function roomAdd(){
 		</div>
 	
 	<br/>
-	<br/>
-	<br/>
-	<br/>
 	
-	<button onclick="roomAdd()">방 추가하기</button>
-	
-	</br></br></br>
+	<a><button onclick="roomAdd()">객실 추가</button></a>
+
+	</br></br></br></br></br></br>
 </div>
 <footer
 				class="is-app--hide aem-GridColumn aem-GridColumn--default--12">

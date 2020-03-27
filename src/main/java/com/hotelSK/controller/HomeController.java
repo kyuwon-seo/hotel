@@ -2,8 +2,10 @@ package com.hotelSK.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,8 +43,10 @@ import com.hotelSK.command.UserDeleteCommand;
 import com.hotelSK.command.UserInfoCommand;
 import com.hotelSK.command.UserListCommand;
 import com.hotelSK.dao.Mapper;
+import com.hotelSK.domain.CheckReserveVO;
 import com.hotelSK.domain.CommentVO;
 import com.hotelSK.domain.CommentsVO;
+import com.hotelSK.domain.NotUserVO;
 import com.hotelSK.domain.ReservationVO;
 import com.hotelSK.domain.RoomStatusVO;
 import com.hotelSK.domain.RoomVO;
@@ -87,6 +91,138 @@ public class HomeController {
 	public int idCheck(@RequestParam("userId") String user_id) {
 		System.out.println("idCheck 시작");
 		return mapper.getIdCheck(user_id);
+	}
+	
+	@RequestMapping(value="eventList", method=RequestMethod.GET)
+	@ResponseBody
+	public JSONArray eventList(@RequestParam(value="room_id") String r_id) {
+		
+		int room_id = Integer.parseInt(r_id);
+		List<Map> m = mapper.testlist(room_id);
+		System.out.println("room_id = "+room_id);
+		
+		JSONArray jsonArray = new JSONArray(); 
+		JSONObject jsonObject = null; 
+
+		for (Map<String, Object> command : m){
+			Date in = (Date)command.get("checkIn");
+			Date out = (Date)command.get("checkOut");
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(out);
+			cal.add(Calendar.DATE, 1);
+			
+			String name = command.get("user_name").toString();
+			if(name.equals("admin")) {
+				int nUser_id = (int)command.get("res_id");
+				NotUserVO nUserVO = mapper.notUser(nUser_id);
+				
+				name = nUserVO.getNuser_name();
+			}
+	       
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			
+			jsonObject = new JSONObject();
+			jsonObject.put("title", name+"님 예약");
+			jsonObject.put("id", command.get("res_id").toString());
+			jsonObject.put("start", sdf.format(in));
+			jsonObject.put("end", sdf.format(cal.getTime()));
+			//jsonObject.put("rendering", "background");
+			//res_id, user_id, checkIn, checkOut, room_id
+			jsonArray.add(jsonObject);
+		}
+		System.out.println(jsonArray.toString());
+
+		return jsonArray;
+	}
+	@RequestMapping(value="checkReserve", method=RequestMethod.GET)
+	@ResponseBody
+	public CheckReserveVO checkReserve(HttpServletRequest request, 
+			@RequestParam(value="room_id") String id, @RequestParam(value="check_day") String check_day) {
+		
+		int room_id = Integer.parseInt(id);
+		Map<String, Object> checkInfo = new HashMap<>();
+		checkInfo.put("room_id", room_id);
+		checkInfo.put("check_day", check_day);
+		
+		CheckReserveVO checkReserveVO = new CheckReserveVO();
+		ReservationVO reservationVO = mapper.checkReserveOk(checkInfo);
+		//해당 날짜에 예약이 있으면 reservVO 받아온다. - 없다면 null 뱉을것.
+		
+		if(reservationVO != null) { //예약이 없으면
+			//user_no로 userVO 받는다. 만약 user_name=admin 이면
+			//res_id로 비회원 정보 받아온다.
+			checkReserveVO.setRes_id(reservationVO.getRes_id());
+			
+			UserVO userVO = mapper.getUser(reservationVO.getUser_no());
+			checkReserveVO.setCheckIn(reservationVO.getCheckIn());
+			checkReserveVO.setCheckOut(reservationVO.getCheckOut());
+			checkReserveVO.setUser_name(userVO.getUser_name());
+			checkReserveVO.setUser_phone(userVO.getUser_phone());
+			
+			if(userVO.getUser_name().equals("admin")) {
+				NotUserVO notUserVO = mapper.notUser(reservationVO.getRes_id());
+				checkReserveVO.setUser_name(notUserVO.getNuser_name());
+				checkReserveVO.setUser_phone(notUserVO.getNuser_phone());
+			}
+		}else {
+			return null;
+		}		
+		
+		return checkReserveVO;
+	}
+	
+	@RequestMapping(value="checkSelect", method=RequestMethod.GET)
+	@ResponseBody
+	public int checkSelect(HttpServletRequest request, @RequestParam(value="room_id") String id, 
+			@RequestParam(value="start_day") String start_day, @RequestParam(value="end_day") String end_day) throws ParseException {
+		
+		int room_id = Integer.parseInt(id);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date end = sdf.parse(end_day);
+        
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(end);
+		cal.add(Calendar.DATE, -1);
+		
+		String e_day = sdf.format(cal.getTime()).toString();
+		
+		/*Map<String, Object> checkInfo = new HashMap<>();
+		checkInfo.put("room_id", room_id);
+		checkInfo.put("checkIn", start_day);
+		checkInfo.put("checkOut", e_day);*/
+		
+		ReservationVO checkSelect = new ReservationVO();
+		checkSelect.setRoom_id(room_id);
+		checkSelect.setCheckIn(start_day);
+		checkSelect.setCheckOut(e_day);
+		
+		int cnt = mapper.hotelReSearch(checkSelect);
+		int cnt2 = mapper.hotelReSearch2(checkSelect);
+		System.out.println("cnt is "+cnt+" " + cnt2);
+		
+		if( (cnt==0) && (cnt2==0) ) { //예약이 없으면
+			return 0;
+		}
+		
+		return 1;
+	}
+	
+	@RequestMapping(value="makeReserveModal", method=RequestMethod.GET)
+	@ResponseBody
+	public int makeReserveModal(HttpServletRequest request, @RequestParam(value="room_id") int room_id, 
+			@RequestParam(value="start_day") String checkIn, @RequestParam(value="end_day") String checkOut,
+			@RequestParam(value="u_name") String nuser_name, @RequestParam(value="u_phone") String nuser_phone) {
+		
+		MakeReservationCommand makeReservationCommand = new MakeReservationCommand();
+		
+		if( (nuser_name=="") || (nuser_phone=="") ) {
+			return -1;
+		}
+		int res = makeReservationCommand.make(request, mapper, room_id, checkIn, checkOut, nuser_name, nuser_phone);
+		System.out.println("res is "+res);
+		
+		return res;
 	}
 	
 	@RequestMapping(value="addComment", method=RequestMethod.GET)
@@ -154,8 +290,21 @@ public class HomeController {
 		return "redirect:userInfo";
 	}
 	
-	@RequestMapping(value="/adminCancel")
-	public String adminCancel(HttpServletRequest request) {
+	@RequestMapping(value="/adminCancel", method=RequestMethod.POST)
+	@ResponseBody
+	public int adminCancel(HttpServletRequest request, @RequestParam(value="res_id") int res_id) {
+		
+		ReservationVO reservationVO = mapper.getReservation(res_id);
+		if(reservationVO == null) {
+			return 0;
+		}
+		mapper.cancelReserv(res_id);			
+		
+		return 1;
+	}
+	
+	@RequestMapping(value="/adminCancel2")
+	public String adminCancel2(HttpServletRequest request) {
 		int res_id = Integer.parseInt(request.getParameter("res_id"));
 		mapper.cancelReserv(res_id);
 		
@@ -177,12 +326,30 @@ public class HomeController {
 		int roomChild = roomChild1 + roomChild2 + roomChild3;
 		
 		String[] periodArr = period.split("~");
+		/*
 		Map<String, String> searchMap = new HashMap<>();
 		searchMap.put("start_date", periodArr[0]);
 		searchMap.put("end_date", periodArr[1]);
 		List<ReservationVO> canNotReservList = mapper.hotelSearch(searchMap);
+		*/
 		List<RoomVO> roomList = mapper.roomList2(searchKeyword);
+
+		ReservationVO checkVO = new ReservationVO();
+		checkVO.setCheckIn(periodArr[0]);
+		checkVO.setCheckOut(periodArr[1]);
 		
+		for(int i=0; i<roomList.size(); i++){
+			checkVO.setRoom_id( roomList.get(i).getRoom_id() );
+			int cnt = mapper.hotelReSearch(checkVO);
+			int cnt2 = mapper.hotelReSearch2(checkVO);
+			System.out.println("cnt is "+cnt + " " + cnt2);
+			
+			if( (cnt != 0) || (cnt2 != 0) ) { //둘중 하나라도 0이 아니면 이미 예약이 있는 객실
+				roomList.remove(i);
+			}
+		}
+		
+		/*
 		for (int j = 0; j < roomList.size(); j++) {
 			if (canNotReservList.size() > 0) {
 				for (int i = 0; i < canNotReservList.size(); i++) {
@@ -195,6 +362,7 @@ public class HomeController {
 				break;
 			}
 		}
+		*/
 		HttpSession session = request.getSession();
 		session.setAttribute("roomList", roomList);
 		session.setAttribute("start_date", periodArr[0]);
@@ -257,10 +425,12 @@ public class HomeController {
 	public String reservationList(HttpServletRequest request) {
 		List<ReservationVO> reservationList = mapper.reservationList();
 		List<UserVO> userList = mapper.userList();
+		List<RoomVO> roomIdList = mapper.roomIdList();
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("reservationVO", reservationList);
 		session.setAttribute("userList", userList);
+		session.setAttribute("roomVO", roomIdList);
 		
 		return "adminReservationList";
 	}

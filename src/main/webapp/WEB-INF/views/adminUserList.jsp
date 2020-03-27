@@ -91,14 +91,24 @@
 									<ul class="s098__wrapper--1depth">
 									
 										<li class="item-area">
+											<a href="<%=request.getContextPath()%>/reservationList"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">예약 관리</a>
+										</li>
+										<li class="item-area">
+											<a href="<%=request.getContextPath()%>/userList"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">회원 목록</a>
+										</li>
+										<li class="item-area">
+											<a href="<%=request.getContextPath()%>/roomList"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">객실 목록</a>
+										</li>
+										<li class="item-area">
 											<a href="<%=request.getContextPath()%>/home"
 											class="s098__text--1depth s098__text--arrow" target="_self"
 											data-js="nav__anchor">메인 페이지</a>
-										</li>
-										<li class="item-area">
-											<a href="<%=request.getContextPath()%>/admin"
-											class="s098__text--1depth s098__text--arrow" target="_self"
-											data-js="nav__anchor">관리자 페이지로</a>
 										</li>
 									
 									</ul>
@@ -131,11 +141,8 @@ function home(){
 	<% List<UserVO> list = (List<UserVO>)request.getSession().getAttribute("userList"); %>
 		<tr class="info">
 			<th><b>아이디</b></th>
-			<!-- <th>&nbsp;&nbsp;</th> -->
 			<th><b>이메일</b></th>
-			<!-- <th>&nbsp;&nbsp;</th> -->
 			<th><b>이름</b></th>
-			<!-- <th>&nbsp;&nbsp;</th> -->
 			<th><b>생년월일</b></th>
 			<th></th>
 		</tr>
@@ -144,32 +151,12 @@ function home(){
 		%>
 		<tr>
 			<td><%=list.get(i).getUser_id()%></td>
-			<!-- <td><span>&nbsp;&nbsp;</span></td> -->
 			<td><%=list.get(i).getUser_email()%></td>
-			<!-- <td><span>&nbsp;&nbsp;</span></td> -->
 			<td><%=list.get(i).getUser_name()%></td>
-			<!-- <td><span>&nbsp;&nbsp;&nbsp;</span></td> -->
 			<td><%=list.get(i).getUser_date()%></td>
-			<!-- <td><span>&nbsp;&nbsp;&nbsp;</span></td> -->
-			<%-- <td>
-			<form action="<%=request.getContextPath()%>/userDelete" method="post">
-				<input type="hidden" value="<%=list.get(i).getUser_id()%>" name="user_id" style="border: solid;border-color: gray;"/>
-				<input type="submit" value="회원 삭제"></input><br/>
-			</form>
-			</td> --%>
 			<td>
 				<span><a id="reservButton" href="<%=request.getContextPath()%>/adminUserDelete?user_id=<%=list.get(i).getUser_id()%>">회원 삭제</a></span>
 			</td>
-				<%-- <form action="<%=request.getContextPath()%>/loginUser" method="post">
-								아이디 :  <input type="text" name="user_id" placeholder="아이디" style="border: solid;border-color: gray;"/>
-								<br/>
-								<br/>
-								
-								비밀번호 :  <input type="password" name="user_password" placeholder="비밀번호" style="border: solid;border-color: gray;"/>
-								<br/>
-								<br/>
-								<input type="submit" value="로그인"></input><br/>
-				</form> --%>
 		</tr>	
 	<%	
 	}

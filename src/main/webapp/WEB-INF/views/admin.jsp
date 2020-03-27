@@ -18,6 +18,7 @@
 <link rel="apple-touch-icon" sizes="114x114"
 	href="../content/dam/lotte-hotel/common/favicon/LH-favicon.png" />
 
+
 <title>관리자 페이지</title>
 
 
@@ -43,7 +44,7 @@
 	src="${pageContext.request.contextPath}/resources/etc.clientlibs/lottehotel/clientlibs/clientlib-dependencies/library/common.min.ACSHASH36af1d70dc150bdbe701882416c50a5d.js"></script>
 
 <script src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script>
-<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script> -->
 
 <script type="text/javascript">
 	function userList() {
@@ -76,6 +77,7 @@
 				</div>
 			</div>
 		</div>
+  
 		<div align="center">
 
 			<br />
@@ -86,7 +88,7 @@
 			<button onclick="userList()">▶ 회원 목록 보기 ◀</button>
 			<br /> <br />
 
-			<button onclick="roomList()">▶ 방 목록 보기 ◀</button>
+			<button onclick="roomList()">▶ 객실 목록 보기 ◀</button>
 			<br /> <br />
 
 			<button onclick="reservationList()">▶ 예약 목록 보기 ◀</button>
@@ -104,7 +106,11 @@
 				<br />
 			</div>
 		</div>
-	</div>
+	
+		
+		
+	
+	
 	<footer class="is-app--hide aem-GridColumn aem-GridColumn--default--12">
 		<div>
 			<div class="s100">
@@ -201,8 +207,9 @@
 			</div>
 		</div>
 	</footer>
+	
 	</div>
-
+	
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/etc.clientlibs/lottehotel/clientlibs/clientlib-dependencies.min.ACSHASH29195619a128b2e1241c11dd7742c127.js"></script>
 

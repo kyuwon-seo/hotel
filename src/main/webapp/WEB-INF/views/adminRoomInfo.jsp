@@ -51,14 +51,24 @@
 									<ul class="s098__wrapper--1depth">
 									
 										<li class="item-area">
+											<a href="<%=request.getContextPath()%>/reservationList"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">예약 관리</a>
+										</li>
+										<li class="item-area">
+											<a href="<%=request.getContextPath()%>/userList"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">회원 목록</a>
+										</li>
+										<li class="item-area">
+											<a href="<%=request.getContextPath()%>/roomList"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">객실 목록</a>
+										</li>
+										<li class="item-area">
 											<a href="<%=request.getContextPath()%>/home"
 											class="s098__text--1depth s098__text--arrow" target="_self"
 											data-js="nav__anchor">메인 페이지</a>
-										</li>
-										<li class="item-area">
-											<a href="<%=request.getContextPath()%>/admin"
-											class="s098__text--1depth s098__text--arrow" target="_self"
-											data-js="nav__anchor">관리자 페이지로</a>
 										</li>
 									
 									</ul>

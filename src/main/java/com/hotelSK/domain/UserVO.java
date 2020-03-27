@@ -7,7 +7,14 @@ public class UserVO {
 	private String user_name;
 	private String user_email;
 	private String user_date;
+	private String user_phone;
 	
+	public String getUser_phone() {
+		return user_phone;
+	}
+	public void setUser_phone(String user_phone) {
+		this.user_phone = user_phone;
+	}
 	public int getUser_no() {
 		return user_no;
 	}

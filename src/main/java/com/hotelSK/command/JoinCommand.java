@@ -19,6 +19,7 @@ public class JoinCommand implements Command{
 		userVO.setUser_name(request.getParameter("user_name"));
 		userVO.setUser_email(request.getParameter("user_email"));
 		userVO.setUser_date(request.getParameter("user_birth"));
+		userVO.setUser_phone(request.getParameter("user_phone"));
 		
 		mapper.joinUser(userVO);
 		

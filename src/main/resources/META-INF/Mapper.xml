@@ -5,7 +5,8 @@
 <mapper namespace="com.hotelSK.dao.Mapper">
   
   <insert id="joinUser" parameterType="com.hotelSK.domain.UserVO">
-  	insert into hotel.users (user_id,user_password,user_name,user_email,user_date) values (#{user_id},#{user_password},#{user_name},#{user_email},#{user_date})
+  	insert into hotel.users (user_id,user_password,user_name,user_email,user_date,user_phone) 
+  	values (#{user_id},#{user_password},#{user_name},#{user_email},#{user_date},#{user_phone})
   </insert>
   
   <select id="getIdCheck" parameterType="String" resultType="int">
@@ -14,6 +15,10 @@
   
   <select id="loginUser" parameterType="Map" resultType="com.hotelSK.domain.UserVO">
   	select * from hotel.users where user_id = #{user_id} and user_password = #{user_password}
+  </select>
+  
+  <select id="getUser" parameterType="int" resultType="com.hotelSK.domain.UserVO">
+  	select * from hotel.users where user_no = #{user_no}
   </select>
   
   <select id="roomInfo" parameterType="int" resultType="com.hotelSK.domain.RoomVO">
@@ -66,6 +71,14 @@
   	insert into hotel.comments (co_txt, user_id, room_id) values (#{co_txt}, #{user_id}, #{room_id})
   </insert>
   
+  <insert id="makeNotUser" parameterType="com.hotelSK.domain.NotUserVO">
+  	insert into hotel.notuser (res_id, nuser_name, nuser_phone) values (#{res_id}, #{nuser_name}, #{nuser_phone})
+  </insert>
+  
+  <select id="notUserNo" parameterType="com.hotelSK.domain.ReservationVO" resultType="int">
+  	select res_id from reservation where user_no=#{user_no} and checkIn=#{checkIn} 
+  </select>
+  
   <select id="checkReserv" parameterType="int" resultType="com.hotelSK.domain.ReservationVO">
   	select * from hotel.reservation where user_no = #{user_no}
   </select>
@@ -76,6 +89,18 @@
   
   <select id="reservationList" resultType="com.hotelSK.domain.ReservationVO">
   	select * from hotel.reservation
+  </select>
+  
+  <select id="roomIdList" resultType="com.hotelSK.domain.RoomVO">
+  	select room_id, room_no, room_type from hotel.room where hotel_name='SK호텔서울'
+  </select>
+  
+  <select id="testlist" parameterType="int" resultType="Map">
+  	select * from (select res_id, user_id, checkIn, checkOut, room_id, user_name 
+  	from reservation left join users on reservation.user_no = users.user_no)test where room_id=#{room_id}
+  </select>
+  <select id="notUser" parameterType="int" resultType="com.hotelSK.domain.NotUserVO">
+  	select * from notuser where res_id=#{res_id}
   </select>
   
   <update id="checkInReserv" parameterType="int">
@@ -96,6 +121,9 @@
   <delete id="cancelReserv" parameterType="int">
   	delete from hotel.reservation where res_id=#{res_id}
   </delete>
+  <select id="checkReserveOk" parameterType="Map" resultType="com.hotelSK.domain.ReservationVO">
+  	select * from hotel.reservation where room_id=#{room_id} and (#{check_day} between checkIn and checkOut);
+  </select>
   <select id="hotelSearch" parameterType="Map" resultType="com.hotelSK.domain.ReservationVO">
   	select * from hotel.reservation where (#{start_date} BETWEEN checkIn AND checkOut) 
   	OR (#{end_date} BETWEEN checkIn AND checkOut) 
@@ -103,6 +131,10 @@
   <select id="hotelReSearch" parameterType="com.hotelSK.domain.ReservationVO" resultType="int">
   	select count(*) from hotel.reservation where room_id=#{room_id} AND ((#{checkIn} BETWEEN checkIn AND checkOut) 
   	OR (#{checkOut} BETWEEN checkIn AND checkOut)) 
+  </select>
+  <select id="hotelReSearch2" parameterType="com.hotelSK.domain.ReservationVO" resultType="int">
+  	select count(*) from hotel.reservation where room_id=#{room_id} AND ((checkIn BETWEEN #{checkIn} AND #{checkOut}) 
+  	OR (checkOut BETWEEN #{checkIn} AND #{checkOut})) 
   </select>
   
   <select id="commentList" parameterType="int" resultType="com.hotelSK.domain.CommentsVO">

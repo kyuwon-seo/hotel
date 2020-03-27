@@ -61,7 +61,8 @@ public class AdminRoomUpdateCommand implements Command{
 		mapper.roomUpdate(roomVO);
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("page", "admin");
+		map.put("page", "redirect:roomList");
+		
 		return map;
 	}
 }
