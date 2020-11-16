@@ -1,4 +1,5 @@
 <%@page import="com.hotelSK.domain.RoomVO"%>
+<%@page import="com.hotelSK.domain.PageNationVO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
@@ -36,7 +37,10 @@
 
 </head>
 <body>
-
+				<%
+					PageNationVO pageNo = new PageNationVO(1,1,5);
+					session.setAttribute("pageNo", pageNo);
+				%>
 <div>
 				<div>
 					<div>
@@ -48,30 +52,29 @@
 							</span>
 						</div>
 						<div>
-									<ul class="s098__wrapper--1depth">
-									
-										<li class="item-area">
-											<a href="<%=request.getContextPath()%>/reservationList"
-											class="s098__text--1depth s098__text--arrow" target="_self"
-											data-js="nav__anchor">예약 관리</a>
-										</li>
-										<li class="item-area">
-											<a href="<%=request.getContextPath()%>/userList"
-											class="s098__text--1depth s098__text--arrow" target="_self"
-											data-js="nav__anchor">회원 목록</a>
-										</li>
-										<li class="item-area">
-											<a href="<%=request.getContextPath()%>/roomList"
-											class="s098__text--1depth s098__text--arrow" target="_self"
-											data-js="nav__anchor">객실 목록</a>
-										</li>
-										<li class="item-area">
-											<a href="<%=request.getContextPath()%>/home"
-											class="s098__text--1depth s098__text--arrow" target="_self"
-											data-js="nav__anchor">메인 페이지</a>
-										</li>
-									
-									</ul>
+					<ul class="s098__wrapper--1depth">
+
+						<li class="item-area"><a
+							href="<%=request.getContextPath()%>/reservationList"
+							class="s098__text--1depth s098__text--arrow" target="_self"
+							data-js="nav__anchor">예약 관리</a></li>
+						<li class="item-area"><a
+							href="<%=request.getContextPath()%>/userList"
+							class="s098__text--1depth s098__text--arrow" target="_self"
+							data-js="nav__anchor">회원 목록</a></li>
+						<li class="item-area"><a
+							href="<%=request.getContextPath()%>/roomList"
+							class="s098__text--1depth s098__text--arrow" target="_self"
+							data-js="nav__anchor">객실 목록</a></li>
+							<li class="item-area"><a
+							href="<%=request.getContextPath()%>/qnaBoard"
+							class="s098__text--1depth s098__text--arrow" target="_self"
+							data-js="nav__anchor">질문 목록</a></li>
+						<li class="item-area"><a
+							href="<%=request.getContextPath()%>/home"
+							class="s098__text--1depth s098__text--arrow" target="_self"
+							data-js="nav__anchor">메인 페이지</a></li>
+					</ul>
 						</div>
 						</div>
 						</div>

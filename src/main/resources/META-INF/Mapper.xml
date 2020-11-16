@@ -9,6 +9,89 @@
   	values (#{user_id},#{user_password},#{user_name},#{user_email},#{user_date},#{user_phone})
   </insert>
   
+  <select id="getQnaCo" parameterType="int" resultType="com.hotelSK.domain.QnaComentsVO">
+  <![CDATA[
+  	select co_no, co_group, user_id, co_text, 
+  		if(
+  			date_format(co_date, '%Y%m%d') < date_format(now(), '%Y%m%d'),
+    		date_format(co_date, '%Y.%m.%d'),
+    		date_format(co_date, '%H:%i')) as co_date
+    from hotel.qna_comments
+    where board_no = #{board_no}
+    order by co_group, co_no;
+   ]]>
+  </select>
+  
+  <!-- 댓글달때 insert, 리플달때는 다르게 ㄱㄱ -->
+  <insert id="makeQnaCo" parameterType="com.hotelSK.domain.QnaComentsVO">
+  	insert into qna_comments (co_group,user_id, co_text, board_no, co_date)
+  	select case when count(co_group)>0 then max(co_group)+1 else 0 end,
+  	#{user_id}, #{co_text}, #{board_no}, now() 
+  	from qna_comments where board_no=#{board_no};
+  </insert>
+<!--   	insert into qna_comments (co_group,user_id, co_text, board_no, co_date) select max(co_group)+1,
+  	#{user_id}, #{co_text}, #{board_no}, now()
+  	from qna_comments where board_no=#{board_no}; -->
+  
+  <insert id="makeQnaRe" parameterType="com.hotelSK.domain.QnaComentsVO">
+  	insert into qna_comments (co_group,user_id, co_text, board_no, co_date) select co_group,
+  	#{user_id}, #{co_text}, #{board_no}, now()
+  	from qna_comments where co_no=#{co_no};
+  </insert>
+  
+  <update id="updateQnaCo" parameterType="com.hotelSK.domain.QnaComentsVO">
+  </update>
+  
+  <delete id="deleteQnaCo" parameterType="int">
+  	update qna_comments set co_text='' where co_no=#{co_no}
+  </delete>
+  	<!-- delete from qna_comments where co_no=#{co_no} -->
+  
+  <insert id="makeQna" parameterType="com.hotelSK.domain.QnaBoardVO">
+  	insert into hotel.qna_board (user_id, user_password, board_title, board_text, board_date) 
+  	values (#{user_id},#{user_password},#{board_title},#{board_text}, now())
+  </insert>
+  
+  <update id="updateQna" parameterType="com.hotelSK.domain.QnaBoardVO">
+  	update hotel.qna_board 
+  	set board_title=#{board_title},
+  	board_text=#{board_text}
+  	where board_no = #{board_no}
+  </update>
+  
+  <delete id="deleteQna" parameterType="int">
+  	delete from hotel.qna_board where board_no = #{board_no}
+  </delete>
+  
+  <select id="getQna" resultType="com.hotelSK.domain.QnaBoardVO">
+  <![CDATA[
+  	select A.board_no, user_id, user_password, board_title, board_text, 
+  		if(
+  			date_format(board_date, '%Y%m%d') < date_format(now(), '%Y%m%d'),
+    		date_format(board_date, '%Y.%m.%d'),
+    		date_format(board_date, '%H:%i')) as board_date,
+    	case when cnt>0 then cnt else 0 end as cnt   		
+    from hotel.qna_board as A
+    left outer join (select board_no,count(*) as cnt from qna_comments group by board_no) as B
+    on A.board_no = B.board_no
+    order by board_no desc;
+   ]]>
+  </select>
+  
+  <!-- <![CDATA[
+  	select board_no, user_id, user_password, board_title, board_text, 
+  		if(
+  			date_format(board_date, '%Y%m%d') < date_format(now(), '%Y%m%d'),
+    		date_format(board_date, '%Y.%m.%d'),
+    		date_format(board_date, '%H:%i')) as board_date
+    from hotel.qna_board
+    order by board_no desc;
+   ]]> -->
+  
+  <select id="getQnaDetail" resultType="com.hotelSK.domain.QnaBoardVO">
+  	select * from hotel.qna_board where board_no = #{board_no}
+  </select>
+  
   <select id="getIdCheck" parameterType="String" resultType="int">
 	select count(*) from hotel.users where user_id = #{user_id}  
   </select>

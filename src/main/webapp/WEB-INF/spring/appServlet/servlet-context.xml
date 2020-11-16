@@ -32,7 +32,8 @@
         <interceptor>
             <mapping path="/makeReservation"/>
             <mapping path="addComment"/>
-            
+            <mapping path="/qnaBoard/write"/>
+                        
             <beans:bean class="com.hotelSK.interceptor.authenticationInterceptor"/>
         </interceptor>
     </interceptors>

@@ -1,8 +1,9 @@
 <%@page import="com.hotelSK.domain.RoomVO"%>
 <%@page import="com.hotelSK.domain.UserVO" %>
 <%@page import="com.hotelSK.domain.CommentsVO"%>
+<%@page import="com.hotelSK.domain.PageNationVO" %>
 <%@page import="java.util.List"%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -80,6 +81,11 @@
 	src="${pageContext.request.contextPath}/resources/etc.clientlibs/lottehotel/clientlibs/clientlib-dependencies/library/common.min.ACSHASH36af1d70dc150bdbe701882416c50a5d.js"></script>
 </head>
 <body>
+				<%
+					PageNationVO pageNo = new PageNationVO(1,1,5);
+					session.setAttribute("pageNo", pageNo);
+				%>
+
 		<div>
 				<div>
 					<div>
@@ -551,7 +557,7 @@
 			        	}else {
 			                html += "<tr>";
 							html += "<td>";
-							html += "<h5><string>등록된 댓글이 없습니다.</strong></h5>";
+							html += "<h5><strong>등록된 댓글이 없습니다.</strong></h5>";
 							html += "</td>";
 							html += "</tr>";
 			            }

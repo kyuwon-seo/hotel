@@ -112,15 +112,17 @@ table {
 			
 			<div id="container" class="ly-container">
 						<div align="center">
-						
-							<form action="<%=request.getContextPath()%>/joinUser" method="post">	
-							<table>
+	<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h2 class="text-center">회원가입</h2>
+        </br>
+        	<form action="<%=request.getContextPath()%>/joinUser" method="post">	
+							<table class="table table-striped">
 							<tr>
+								<td>아이디</td>
 								<td>
-									아이디 
-								</td>
-								<td>
-									<input type="text" id="user_id" name="user_id" style="border: solid;border-color: gray;"/>
+									<input type="text" class="form-control" id="user_id" name="user_id">
 								</td>
 							</tr>
 							<tr>
@@ -130,20 +132,15 @@ table {
 								</td>
 							</tr>
 							<tr>
+								<td>비밀번호</td>  
 								<td>
-									비밀번호 
-								</td>  
-								<td>
-									<input type="password" id="user_pw" name="user_pw" style="border: solid;border-color: gray;"/>
-							</td>
-								<!-- <br/><br/> -->
+									<input type="password" class="form-control" id="user_pw" name="user_pw"/>
+								</td>
 							</tr>
 							<tr>
+								<td>비밀번호 확인</td>
 								<td>
-									비밀번호 확인   
-								</td>
-								<td>
-									<input type="password" id="user_pw2" name="user_pw2" style="border: solid;border-color: gray;"/>
+									<input type="password" class="form-control" id="user_pw2" name="user_pw2"/>
 								</td>
 							</tr>
 							<tr>
@@ -153,50 +150,41 @@ table {
 								</td>
 							</tr>
 							<tr>
+								<td>이름</td>
 								<td>
-									이름 
-								</td>
-								<td>
-									<input type="text" name="user_name" style="border: solid;border-color: gray;"/>
+									<input type="text" class="form-control" name="user_name"/>
 								</td>
 							</tr>
 							<tr>
-								<!-- <br/><br/> -->
+								<td>이메일</td>
 								<td>
-									이메일 
-								</td>
-								<td>
-									<input type="email" name="user_email" style="border: solid;border-color: gray;"/>
+									<input type="email" class="form-control" name="user_email"/>
 								</td>
 							</tr>
 							<tr>
+								<td>전화번호</td>
 								<td>
-									전화번호 
-								</td>
-								<td>
-									<input type="text" name="user_phone" style="border: solid;border-color: gray;"/>
+									<input type="text" class="form-control" name="user_phone"/>
 								</td>
 							</tr>
 							<tr>
-								<!-- <br/><br/> -->
+								<td>생년월일</td>
 								<td>
-									생년월일 
-								</td>
-								<td>
-									<input type="date" name="user_birth" style="border: solid;border-color: gray;"/>
+									<input type="date" class="form-control" name="user_birth"/>
 								</td>
 							</tr>
-								<!-- <br/><br/> -->
 							<tr>
 								<td></td>
 								<td>
-									<input type="submit" class="btn btn-default btn-sm"
-									value="회원가입"></input><br/>
+									<input type="submit" class="btn btn-default btn-sm" value="회원가입"></input><br/>
 								</td>
 							</tr>
 							</table>
-							</form>
-						</div>
+						</form>
+					</div>
+					<div class="col-md-3"></div>
+					</div>
+				</div>
 <script>			
 	$(function() { //비밀번호 확인
 		$('#user_pw2').blur(function() {

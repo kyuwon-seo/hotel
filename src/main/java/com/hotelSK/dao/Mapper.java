@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.hotelSK.domain.CommentsVO;
 import com.hotelSK.domain.NotUserVO;
+import com.hotelSK.domain.QnaBoardVO;
+import com.hotelSK.domain.QnaComentsVO;
 import com.hotelSK.domain.ReservationVO;
 import com.hotelSK.domain.RoomStatusVO;
 import com.hotelSK.domain.RoomVO;
@@ -15,6 +17,15 @@ import com.hotelSK.domain.UserVO;
 public interface Mapper {
 	public UserVO loginUser(Map<String, String> loginMap);
 	public void joinUser(UserVO userVO);
+	public void makeQnaCo(QnaComentsVO qnaComentsVO);
+	public void makeQnaRe(QnaComentsVO qnaComentsVO);
+	public void makeQna(QnaBoardVO qnaBoardVO);
+	public void updateQna(QnaBoardVO qnaBoardVO);
+	public void deleteQna(int board_no);
+	public void deleteQnaCo(int co_no);
+	public List<QnaComentsVO> getQnaCo(int board_no);
+	public List<QnaBoardVO> getQna();
+	public QnaBoardVO getQnaDetail(int board_no);
 	public List<ReservationVO> checkReserv(int user_no);
 	public void deleteUser(String user_id);
 	public void deleteRoom(int room_id);

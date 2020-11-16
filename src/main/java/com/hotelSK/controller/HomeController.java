@@ -12,18 +12,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,25 +34,31 @@ import com.hotelSK.command.AdminRoomDeleteCommand;
 import com.hotelSK.command.AdminRoomInfoCommand;
 import com.hotelSK.command.AdminRoomUpdateCommand;
 import com.hotelSK.command.AdminUserDeleteCommand;
+import com.hotelSK.command.DeleteQnaCoCommand;
+import com.hotelSK.command.DeleteQnaCommand;
+import com.hotelSK.command.DetailQnaCommand;
 import com.hotelSK.command.JoinCommand;
 import com.hotelSK.command.LoginCommand;
+import com.hotelSK.command.MakeQnaCoCommand;
+import com.hotelSK.command.MakeQnaCommand;
 import com.hotelSK.command.MakeReservationCommand;
+import com.hotelSK.command.QnaCommand;
 import com.hotelSK.command.RoomAddCommand;
 import com.hotelSK.command.RoomListCommand;
+import com.hotelSK.command.UpdateQnaCommand;
 import com.hotelSK.command.UserDeleteCommand;
 import com.hotelSK.command.UserInfoCommand;
 import com.hotelSK.command.UserListCommand;
 import com.hotelSK.dao.Mapper;
 import com.hotelSK.domain.CheckReserveVO;
-import com.hotelSK.domain.CommentVO;
 import com.hotelSK.domain.CommentsVO;
 import com.hotelSK.domain.NotUserVO;
+import com.hotelSK.domain.PageNationVO;
+import com.hotelSK.domain.QnaBoardVO;
+import com.hotelSK.domain.QnaComentsVO;
 import com.hotelSK.domain.ReservationVO;
-import com.hotelSK.domain.RoomStatusVO;
 import com.hotelSK.domain.RoomVO;
 import com.hotelSK.domain.UserVO;
-
-import sun.print.resources.serviceui;
 
 @Controller
 public class HomeController {
@@ -80,6 +86,10 @@ public class HomeController {
 	public String login() {
 		return "login";
 	}
+	@RequestMapping("/qnaBoard/login")
+	public String qnalogin() {
+		return "login";
+	}
 	
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request) {
@@ -91,6 +101,162 @@ public class HomeController {
 	public int idCheck(@RequestParam("userId") String user_id) {
 		System.out.println("idCheck 시작");
 		return mapper.getIdCheck(user_id);
+	}
+	
+	@RequestMapping(value="/qnaReply/{cono}", method=RequestMethod.POST)
+	@ResponseBody
+	public int qnaReplyWrite(HttpServletRequest request, @PathVariable("cono") int cono,
+			@RequestBody QnaComentsVO vo){
+		
+		if(vo != null) {
+			vo.setBoard_no(cono);
+			MakeQnaCoCommand makeQnaCoCommand = new MakeQnaCoCommand();
+			makeQnaCoCommand.replyCommand(request, mapper, vo);
+			
+			System.out.println(vo.getCo_text()+" "+vo.getUser_id()+" insert qnaReply");
+		}
+		
+		return 1;
+	}
+	
+	@RequestMapping(value="/qnaComments/{cono}", method=RequestMethod.POST)
+	@ResponseBody
+	public int qnaCommentsWrite(HttpServletRequest request, @PathVariable("cono") int cono,
+			@RequestBody QnaComentsVO vo){
+		
+		if(vo != null) {
+			vo.setBoard_no(cono);
+			MakeQnaCoCommand makeQnaCoCommand = new MakeQnaCoCommand();
+			makeQnaCoCommand.command(request, mapper, vo);
+			
+			System.out.println(vo.getCo_text()+" "+vo.getUser_id()+" insert qna_coments");
+		}
+		
+		return 1;
+	}
+	@RequestMapping(value="/qnaComments/{cono}", method=RequestMethod.PUT)
+	@ResponseBody
+	public int qnaCommentsUpdate(HttpServletRequest request, @PathVariable("cono") int cono,
+			@RequestBody QnaComentsVO vo){
+		
+		System.out.println("update "+cono);
+		if(vo != null) {
+			System.out.println(vo.getCo_text()+" "+vo.getUser_id());
+		}
+
+		return 1;
+	}
+	@RequestMapping(value="/qnaComments/{cono}", method=RequestMethod.DELETE)
+	@ResponseBody
+	public int qnaCommentsDelete(HttpServletRequest request, @PathVariable("cono") int cono){
+		
+		DeleteQnaCoCommand deleteQnaCoCommand = new DeleteQnaCoCommand();
+		deleteQnaCoCommand.command(request, mapper, cono);
+		
+		System.out.println("delete "+cono);
+		
+		return 1;
+	}
+	
+	@RequestMapping(value="/qnaBoard", method=RequestMethod.GET)
+	public String qnaBoard(HttpServletRequest request) {
+		
+		System.out.println("QnaBoard page");
+		QnaCommand qnaCommand = new QnaCommand();
+		
+		Map<String,Object> map = qnaCommand.command(request, mapper);
+		List<QnaBoardVO> qnaBoardList = new ArrayList<>();
+		
+		String page = (String)map.get("page");
+		qnaBoardList = (List<QnaBoardVO>)map.get("qnaBoardVO");
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("qnaBoardList", qnaBoardList);
+		
+		return "qnaBoard";
+	}
+	//게시글 내용 조회
+	@RequestMapping(value="/qnaBoard/{qnano}", method=RequestMethod.GET)
+	public String qnaBoard(HttpServletRequest request, @PathVariable("qnano") int qnano) {
+		
+		System.out.println("QnaBoard page"+qnano);
+		QnaBoardVO qnaBoardVO = new QnaBoardVO();
+		List<QnaComentsVO> qnaComentsList = new ArrayList<>();
+		
+		DetailQnaCommand detailQnaCommand = new DetailQnaCommand();
+		qnaBoardVO = detailQnaCommand.detailQna(qnano, mapper);
+		qnaComentsList = detailQnaCommand.detailQnaCo(qnano, mapper);
+		
+		if(qnaComentsList.size() != 0) System.out.println(qnaComentsList.get(0).getCo_text());
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("qnaBoardVO", qnaBoardVO);
+		session.setAttribute("qnaComentsList", qnaComentsList);
+		
+		return "qnaBoardDetail";
+	}
+	
+	@RequestMapping(value="/qnaBoard/{qnano}/write", method=RequestMethod.PUT)
+	@ResponseBody
+	public int qnaBoardUpdate(HttpServletRequest request, @PathVariable("qnano") int qnano,
+			@RequestBody QnaBoardVO vo){
+		
+		UpdateQnaCommand updateQnaCommand = new UpdateQnaCommand();
+		updateQnaCommand.updateQna(request, mapper, qnano, vo);
+		
+		if(vo != null) {
+		System.out.println(vo.getBoard_title()+" "+vo.getBoard_text());
+		}else if(vo == null) {
+			System.out.println("board null");
+		}
+		/*QnaBoardVO qnaBoardVO = new QnaBoardVO();
+		
+		DetailQnaCommand detailQnaCommand = new DetailQnaCommand();
+		qnaBoardVO = detailQnaCommand.detailQna(qnano, mapper);
+		qnaComentsList = detailQnaCommand.detailQnaCo(qnano, mapper);
+		
+		qnaBoardVO = (QnaBoardVO)map.get("qnaBoardVO");
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("qnaBoardVO", qnaBoardVO);*/
+		
+		return 1;
+	}
+	@RequestMapping(value="/qnaBoard/{qnano}", method=RequestMethod.DELETE)
+	@ResponseBody
+	public int qnaBoardDelete(HttpServletRequest request, @PathVariable("qnano") int qnano) {
+		System.out.println("delete gogo  "+qnano);
+		DeleteQnaCommand deleteQnaCommand = new DeleteQnaCommand();
+		deleteQnaCommand.command(request, mapper, qnano);
+		
+		return 1;
+	}
+	//게시판 수정폼으로 이동
+	@RequestMapping(value="/qnaBoard/{qnano}/write", method=RequestMethod.GET)
+	public String qnaBoardUpdateForm(HttpServletRequest request, @PathVariable("qnano") int qnano) {
+		
+		QnaBoardVO qnaBoardVO = new QnaBoardVO();
+		DetailQnaCommand detailQnaCommand = new DetailQnaCommand();
+		qnaBoardVO = detailQnaCommand.detailQna(qnano, mapper);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("qnaBoardVO", qnaBoardVO);
+		
+		return "qnaMod";
+	}
+	
+	@RequestMapping(value="/qnaBoard/write", method=RequestMethod.GET)
+	public String qnaBoardWrite() {
+		System.out.println("QnaWrite page");
+		return "qnaWrite";
+	}
+	
+	@RequestMapping(value="/qnaBoard", method=RequestMethod.POST)
+	public String qnaBoardWriteGo(HttpServletRequest request) {
+		MakeQnaCommand makeQnaCommand = new MakeQnaCommand();
+		makeQnaCommand.command(request, mapper);
+		
+		return "redirect:qnaBoard";
 	}
 	
 	@RequestMapping(value="eventList", method=RequestMethod.GET)

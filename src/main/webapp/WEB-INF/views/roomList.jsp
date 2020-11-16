@@ -1,6 +1,7 @@
 <%@page import="com.hotelSK.domain.RoomVO"%>
+<%@page import="com.hotelSK.domain.PageNationVO" %>
 <%@page import="java.util.List"%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -89,6 +90,11 @@
 </head>
 
 <body>
+
+				<%
+					PageNationVO pageNo = new PageNationVO(1,1,5);
+					session.setAttribute("pageNo", pageNo);
+				%>
 		<div>
 				<div>
 					<div>
@@ -115,6 +121,11 @@
 											class="s098__text--1depth s098__text--arrow" target="_self"
 											data-js="nav__anchor">회원가입</a>
 										</li>
+										<li class="item-area"><a
+											href="<%=request.getContextPath()%>/qnaBoard"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">문의하기</a>
+										</li>
 										
 									</ul>
 								<% 	
@@ -135,7 +146,11 @@
 											class="s098__text--1depth s098__text--arrow" target="_self"
 											data-js="nav__anchor">로그아웃</a>
 										</li>
-										
+										<li class="item-area"><a
+											href="<%=request.getContextPath()%>/qnaBoard"
+											class="s098__text--1depth s098__text--arrow" target="_self"
+											data-js="nav__anchor">문의하기</a>
+										</li>
 	
 									</ul>
 	
